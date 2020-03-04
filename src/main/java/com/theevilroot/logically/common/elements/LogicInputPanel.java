@@ -8,9 +8,7 @@ public class LogicInputPanel extends LogicElement {
 
     public LogicInputPanel(int ports, boolean ...initialValues) {
         super(ports, ports);
-        for (int i = 0; i < ports && i < initialValues.length; i++)
-            if (initialValues[i])
-                triggerPort(i);
+        setValues(initialValues);
     }
 
     @Override
@@ -21,6 +19,12 @@ public class LogicInputPanel extends LogicElement {
     public LogicInputPanel triggerPort(int portIndex) {
         portIndex %= getOutputCount();
         inputPorts.get(portIndex).triggerValue();
+        return this;
+    }
+
+    public LogicInputPanel setValues(boolean ...values) {
+        for (int i = 0; i < this.getInputCount() && i < values.length; i++)
+            inputPorts.get(i).setValue(values[i]);
         return this;
     }
 

@@ -69,6 +69,7 @@ public class LogicTest {
             panel.connectPort(i + 1, ors[or], 1);
             ors[or].connectPort(0, outputPanel, or);
         }
+
         Assert.assertFalse(outputPanel.getValue(0));
         Assert.assertTrue(outputPanel.getValue(1));
         Assert.assertTrue(outputPanel.getValue(2));
