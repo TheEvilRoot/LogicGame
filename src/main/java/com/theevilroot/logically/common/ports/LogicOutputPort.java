@@ -7,13 +7,13 @@ public class LogicOutputPort extends LogicPort {
 
     private ArrayList<LogicPort> connectedPorts;
 
-    public LogicOutputPort(boolean initialValue) {
-        super(initialValue);
+    public LogicOutputPort(double x, double y, boolean initialValue) {
+        super(x, y, initialValue);
         this.connectedPorts = new ArrayList<>();
     }
 
-    public LogicOutputPort() {
-        this(false);
+    public LogicOutputPort(double x, double y) {
+        this(x, y, false);
     }
 
     public LogicOutputPort connect(LogicPort port) {

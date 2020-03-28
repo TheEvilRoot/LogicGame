@@ -1,9 +1,18 @@
 package com.theevilroot.logically.gui;
 
+import com.theevilroot.logically.common.elements.LogicCircuit;
+import com.theevilroot.logically.common.elements.LogicElement;
+import com.theevilroot.logically.common.gui.DrawerFactory;
+import com.theevilroot.logically.common.gui.IDrawerFactory;
+import com.theevilroot.logically.common.gui.drawers.LogicCircuitDrawer;
+import com.theevilroot.logically.common.gui.drawers.LogicElementDrawer;
+import com.theevilroot.logically.common.gui.drawers.LogicOutputPortDrawer;
+import com.theevilroot.logically.common.gui.drawers.LogicPortDrawer;
+import com.theevilroot.logically.common.ports.LogicOutputPort;
+import com.theevilroot.logically.common.ports.LogicPort;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -13,12 +22,19 @@ public class GUI extends Application {
     private final VBox root;
     private final Scene mainScene;
 
+    private final DrawerFactory drawerFactory = new DrawerFactory();
+
     public GUI() {
         this.root = new VBox();
-        this.platformPane = new PlatformPane();
+        this.drawerFactory.addDrawer(LogicCircuit.class, new LogicCircuitDrawer());
+        this.drawerFactory.addDrawer(LogicElement.class, new LogicElementDrawer());
+        this.drawerFactory.addDrawer(LogicPort.class, new LogicPortDrawer());
+        this.drawerFactory.addDrawer(LogicOutputPort.class, new LogicOutputPortDrawer());
+        this.platformPane = new PlatformPane(this.drawerFactory);
         this.mainScene = new Scene(root);
 
         this.root.getChildren().add(platformPane);
+
     }
 
     @Override

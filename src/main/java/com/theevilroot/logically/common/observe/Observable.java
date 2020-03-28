@@ -2,10 +2,14 @@ package com.theevilroot.logically.common.observe;
 
 public interface Observable<T> {
 
+    T getValue();
+
+    Boolean hasValue();
+
     Observable<T> subscribe(Observer<T> observer);
 
     Observable<T> unsubscribe(Observer<T> observer);
 
-    void notify(T oldValue, T newValue);
+    void notifyChanged(T newValue);
 
 }
