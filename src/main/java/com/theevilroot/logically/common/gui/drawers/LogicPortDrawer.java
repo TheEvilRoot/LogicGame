@@ -12,7 +12,9 @@ public class LogicPortDrawer implements IDrawer<LogicPort> {
     public void drawElement(IDrawerFactory factory, GraphicsContext gc, Canvas cv, LogicPort view) {
         gc.save();
         gc.setFill(Resources.ELEMENT_PORT_COLOR);
-        gc.fillOval(0, 0, view.getSize().getX(), view.getSize().getY());
+        gc.fillOval(view.getPosition().getX(), view.getPosition().getY() - Resources.ELEMENT_PORT_RADIUS, view.getSize().getX(), view.getSize().getY());
+        gc.setFill(view.getValue() ? Resources.PORT_ACTIVE_COLOR : Resources.PORT_INACTIVE_COLOR);
+        gc.fillOval(view.getPosition().getX() + Resources.ELEMENT_PORT_RADIUS - 4, view.getPosition().getY() - 4, 8, 8);
         gc.restore();
     }
 }

@@ -81,4 +81,12 @@ public class Vector {
         return Math.sqrt(getSquaredMag());
     }
 
+
+    @Override
+    public String toString() {
+        return "Vector{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

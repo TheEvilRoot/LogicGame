@@ -9,7 +9,7 @@ import com.theevilroot.logically.common.observe.ObservableValue;
 
 public class LogicPort implements IView {
 
-    private MutableObservable<Boolean> value = new ObservableValue<Boolean>(false);
+    private MutableObservable<Boolean> value = new ObservableValue<>(false);
     protected Vector position = new Vector(Vector.UNIT);
     protected Vector size = new Vector(Vector.UNIT);
 
@@ -57,6 +57,6 @@ public class LogicPort implements IView {
     }
 
     private void recalculateSize() {
-        size.set(Resources.ELEMENT_PORT_RADIUS, Resources.ELEMENT_PORT_RADIUS);
+        size.set(Resources.ELEMENT_PORT_RADIUS * 2, Resources.ELEMENT_PORT_RADIUS * 2);
     }
 }

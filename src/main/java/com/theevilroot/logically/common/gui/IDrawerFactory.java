@@ -2,5 +2,6 @@ package com.theevilroot.logically.common.gui;
 
 public interface IDrawerFactory {
 
-    IDrawer<IView> getDrawerFor(Class<? extends IView> viewClass);
+    <V extends IView> IDrawer<? super V> getDrawerFor(Class<? super V> viewClass);
+
 }

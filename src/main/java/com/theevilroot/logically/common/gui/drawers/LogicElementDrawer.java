@@ -26,21 +26,28 @@ public class LogicElementDrawer implements IDrawer<LogicElement> {
         // Draw ~the blue~ box
         // Translate info start of box
         gc.translate(view.getPosition().getX() + xOffsets.getX(), view.getPosition().getY() + yOffsets.getX());
-        gc.setFill(Color.BLACK);
+
+        gc.setFill(Resources.ELEMENT_BACKGROUND_COLOR);
+        gc.setStroke(Resources.ELEMENT_STROKE_COLOR);
+        gc.setLineWidth(Resources.ELEMENT_STROKE_WIDTH);
 
         // Draw box with width (width - (start offset + end offset), height - (top offset + bottom offset))
         Vector boxSize = Vector.minus(view.getSize(), new Vector(xOffsets.xySum(), yOffsets.xySum()));
         gc.fillRect(0, 0, boxSize.getX(), boxSize.getY());
 
+        gc.strokeRect(0, 0, boxSize.getX(), boxSize.getY());
+
         gc.restore();
         gc.save();
+        gc.translate(view.getPosition().getX(), view.getPosition().getY());
 
-        IDrawer<IView> portsDrawer = factory.getDrawerFor(LogicPort.class);
+        IDrawer<LogicPort> portsDrawer = (IDrawer<LogicPort>) factory.getDrawerFor(LogicPort.class);
         if (portsDrawer != null) {
             view.getInputPorts().forEach(p -> portsDrawer.drawElement(factory, gc, cv, p));
         } else throw new RuntimeException("port");
 
-        IDrawer<IView> outPortDrawer = factory.getDrawerFor(LogicOutputPort.class);
+        gc.translate(view.getSize().getX() - xOffsets.getY() * 2, 0);
+        IDrawer<LogicPort> outPortDrawer = (IDrawer<LogicPort>) factory.getDrawerFor(LogicOutputPort.class);
         if (outPortDrawer != null) {
             view.getOutputPorts().forEach(p -> outPortDrawer.drawElement(factory, gc, cv, p));
         } else throw new RuntimeException("outport");

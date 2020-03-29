@@ -18,7 +18,7 @@ public class PlatformPane extends SimpleDrawablePane {
     private IDrawerFactory drawerFactory;
 
     public PlatformPane(IDrawerFactory drawerFactory) {
-        this.circuit = new LogicCircuit(400, 400, 0, 0);
+        this.circuit = new LogicCircuit(900, 600, 0, 0);
         this.drawerFactory = drawerFactory;
 
         this.canvas = new Canvas();
@@ -37,7 +37,7 @@ public class PlatformPane extends SimpleDrawablePane {
     }
 
     public void draw() {
-        IDrawer<IView> drawer = drawerFactory.getDrawerFor(circuit.getClass());
+        IDrawer<LogicCircuit> drawer = (IDrawer<LogicCircuit>) drawerFactory.getDrawerFor(circuit.getClass());
         if (drawer != null)
             drawer.drawElement(drawerFactory, canvas.getGraphicsContext2D(), canvas, circuit);
         else throw new RuntimeException("circuit");

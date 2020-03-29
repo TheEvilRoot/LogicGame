@@ -28,7 +28,7 @@ public class LogicCircuitDrawer implements IDrawer<LogicCircuit> {
         }
 
         view.getElements().forEach(e -> {
-            IDrawer<IView> drawer = factory.getDrawerFor(e.getClass());
+            IDrawer<LogicElement> drawer = (IDrawer<LogicElement>) factory.getDrawerFor(e.getClass());
             if (drawer != null) {
                 drawer.drawElement(factory, gc, cv, e);
             } else throw new RuntimeException(e.getClass().getCanonicalName());

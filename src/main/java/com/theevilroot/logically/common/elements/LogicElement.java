@@ -11,7 +11,7 @@ import java.util.List;
 
 public abstract class LogicElement implements Observer<Boolean>, IView {
 
-    private Vector position = new Vector(Vector.UNIT);
+    private Vector position = new Vector(30f, 30f);
     private Vector size = new Vector(Vector.UNIT);
 
     private final int inputCount;
@@ -24,22 +24,29 @@ public abstract class LogicElement implements Observer<Boolean>, IView {
         this.inputCount = inputCount;
         this.outputCount = outputCount;
 
+        recalculateSize();
+
         this.inputPorts = new ArrayList<>();
         this.outputPorts = new ArrayList<>();
 
+        double inDelta = getSize().getY() / (inputCount + 1);
+        double outDelta = getSize().getY() / (outputCount + 1);
+
+        System.out.println(getSize());
+        System.out.println(outDelta);
+
         for (int i = 0; i < inputCount; i++) {
-            LogicPort port = new LogicPort(position.getX(), position.getY() + i * 30);
+            LogicPort port = new LogicPort(0, (i + 1) * inDelta);
             inputPorts.add(port);
         }
         for(int i = 0; i < outputCount; i++) {
-            outputPorts.add(new LogicOutputPort(position.getX(), position.getY() + i * 30));
+            outputPorts.add(new LogicOutputPort(0, outDelta * (i + 1)));
         }
 
         for (LogicPort p : inputPorts) {
             p.getObservableValue().subscribe(this);
         }
 
-        recalculateSize();
     }
 
     public int getOutputCount() {
