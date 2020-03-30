@@ -1,15 +1,18 @@
 package com.theevilroot.logically.common.elements;
 
 import com.theevilroot.logically.common.Resources;
+import com.theevilroot.logically.common.math.Vector;
+import com.theevilroot.logically.common.mouse.MouseHandler;
 import com.theevilroot.logically.common.observe.Observer;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.ports.LogicPort;
 import com.theevilroot.logically.common.view.impl.BaseView;
+import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class LogicElement extends BaseView implements Observer<Boolean> {
+public abstract class LogicElement extends BaseView implements Observer<Boolean>, MouseHandler {
 
     private final int inputCount;
     private final int outputCount;
@@ -86,16 +89,32 @@ public abstract class LogicElement extends BaseView implements Observer<Boolean>
 
     @Override
     public String toString() {
-        return "LogicElement{" +
-                "inputCount=" + inputCount +
-                ", outputCount=" + outputCount +
-                ", inputPorts=" + inputPorts +
-                ", outputPorts=" + outputPorts +
-                '}';
+        return getClass().getSimpleName();
     }
 
     protected void recalculateSize() {
         setSize(Resources.ELEMENT_WIDTH_UNIT, getInputCount() * (Resources.ELEMENT_HEIGHT_PER_WIRE + 1));
+    }
+
+    @Override
+    public boolean handle(MouseEvent event, Vector relPos) {
+        if (relPos.getX() >= 0 && relPos.getY() >= 0 && relPos.getX() < getSize().getX() && relPos.getY() < getSize().getY()) {
+            System.out.println(this);
+            for (LogicPort p : inputPorts) {
+                Vector relMouse = Vector.minus(relPos, Vector.minus(p.getPosition(), getPosition()));
+                relMouse.subtract(new Vector(Resources.ELEMENT_PORT_RADIUS, 0));
+                if (p.handle(event, relMouse))
+                    return true;
+            }
+            for (LogicOutputPort p : outputPorts) {
+                Vector relMouse = Vector.minus(relPos, Vector.minus(p.getPosition(), getPosition()));
+                relMouse.subtract(new Vector(Resources.ELEMENT_PORT_RADIUS, 0));
+                if (p.handle(event, relMouse))
+                    return true;
+            }
+            return true;
+        }
+        return false;
     }
 
     protected abstract boolean f(int outputIndex, Boolean[] inputValues);

@@ -5,13 +5,16 @@ import com.theevilroot.logically.common.elements.LogicCircuit;
 import com.theevilroot.logically.common.elements.base.LogicAndGate;
 import com.theevilroot.logically.common.elements.base.LogicNotGate;
 import com.theevilroot.logically.common.elements.base.LogicOrGate;
+import com.theevilroot.logically.common.math.Vector;
 import com.theevilroot.logically.common.view.drawers.IDrawer;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
 import com.theevilroot.logically.gui.drawable.impl.SimpleDrawablePane;
 import javafx.beans.InvalidationListener;
+import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.MouseEvent;
 
-public class PlatformPane extends SimpleDrawablePane {
+public class PlatformPane extends SimpleDrawablePane implements EventHandler<MouseEvent> {
 
     private final Canvas canvas;
 
@@ -32,6 +35,8 @@ public class PlatformPane extends SimpleDrawablePane {
         };
         canvas.widthProperty().addListener(canvasResizeListener);
         canvas.heightProperty().addListener(canvasResizeListener);
+
+        canvas.setOnMouseClicked(this);
 
         getChildren().add(canvas);
 
@@ -59,5 +64,12 @@ public class PlatformPane extends SimpleDrawablePane {
     @Override
     public void resetDirty() {
         super.resetDirty();
+    }
+
+    @Override
+    public void handle(MouseEvent mouseEvent) {
+        Vector absMouse = new Vector(mouseEvent.getX(), mouseEvent.getY());
+        Vector relMouse = Vector.minus(absMouse, circuit.getPosition());
+        circuit.handle(mouseEvent, relMouse);
     }
 }
