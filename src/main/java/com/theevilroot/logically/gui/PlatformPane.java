@@ -39,9 +39,9 @@ public class PlatformPane extends SimpleDrawablePane {
         and.connectPort(0, not, 0);
         not.connectPort(0, or, 0);
 
+        circuit.addElement(not);
         circuit.addElement(and);
         circuit.addElement(or);
-        circuit.addElement(not);
 
         drawingTimer.start();
     }

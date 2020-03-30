@@ -23,14 +23,20 @@ public class LogicOutputPortDrawer implements IDrawer<LogicOutputPort> {
         gc.setStroke(view.getValue() ? Resources.PORT_ACTIVE_COLOR : Resources.PORT_INACTIVE_COLOR);
 
         view.getConnections().forEach(c -> {
-            connection(gc, view.getPosition(), c.getPosition());
+            connection(gc, view.getPosition(), c.getPosition(), new Vector(view.getPosition().getX(), c.getPosition().getY()));
         });
     }
 
-    private void connection(GraphicsContext gc, Vector from, Vector to) {
-        gc.moveTo(from.getX() + Resources.ELEMENT_PORT_RADIUS, from.getY());
-        gc.lineTo(to.getX() + Resources.ELEMENT_PORT_RADIUS, to.getY());
+    private void connection(GraphicsContext gc, Vector from, Vector to, Vector median) {
+        gc.beginPath();
+        gc.bezierCurveTo(from.getX() + Resources.ELEMENT_PORT_RADIUS,
+                from.getY(),
+                median.getX(),
+                median.getY(),
+                to.getX() + Resources.ELEMENT_PORT_RADIUS,
+                to.getY());
         gc.stroke();
+        gc.closePath();
     }
 
 }
