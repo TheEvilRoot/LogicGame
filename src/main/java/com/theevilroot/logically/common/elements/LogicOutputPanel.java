@@ -6,12 +6,16 @@ public class LogicOutputPanel extends LogicElement {
         super(inputCount, 0);
     }
 
-    @Override
-    protected boolean f(int outputIndex, Boolean[] inputValues) {
-        return false;
+    public LogicOutputPanel(double x, double y, int inputCount) {
+        super(x, y, inputCount, 0);
     }
 
     public boolean getValue(int index) {
         return inputPorts.get(index).getValue();
+    }
+
+    @Override
+    protected boolean f(int outputIndex, Boolean[] inputValues) {
+        return false;
     }
 }

@@ -1,5 +1,7 @@
-package com.theevilroot.logically.gui.drawable;
+package com.theevilroot.logically.gui.drawable.impl;
 
+import com.theevilroot.logically.gui.drawable.DrawableTimer;
+import com.theevilroot.logically.gui.drawable.IDrawable;
 import javafx.animation.AnimationTimer;
 import javafx.scene.layout.Pane;
 

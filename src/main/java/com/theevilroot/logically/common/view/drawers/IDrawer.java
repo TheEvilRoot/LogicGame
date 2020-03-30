@@ -1,6 +1,8 @@
-package com.theevilroot.logically.common.gui;
+package com.theevilroot.logically.common.view.drawers;
 
 
+import com.theevilroot.logically.common.view.IView;
+import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 

@@ -1,4 +1,8 @@
-package com.theevilroot.logically.common.gui;
+package com.theevilroot.logically.common.view.drawers.factory.impl;
+
+import com.theevilroot.logically.common.view.IView;
+import com.theevilroot.logically.common.view.drawers.IDrawer;
+import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
 
 import java.util.HashMap;
 import java.util.Map;

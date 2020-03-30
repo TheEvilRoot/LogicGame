@@ -2,18 +2,18 @@ package com.theevilroot.logically.common.ports;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class LogicOutputPort extends LogicPort {
 
-    private ArrayList<LogicPort> connectedPorts;
-
-    public LogicOutputPort(double x, double y, boolean initialValue) {
-        super(x, y, initialValue);
-        this.connectedPorts = new ArrayList<>();
-    }
+    private ArrayList<LogicPort> connectedPorts = new ArrayList<>();
 
     public LogicOutputPort(double x, double y) {
-        this(x, y, false);
+        super(x, y);
+    }
+
+    public LogicOutputPort() {
+        super();
     }
 
     public LogicOutputPort connect(LogicPort port) {
@@ -31,5 +31,9 @@ public class LogicOutputPort extends LogicPort {
         super.setValue(value);
         connectedPorts.forEach((connection) -> connection.setValue(this.getValue()));
         return this;
+    }
+
+    public List<LogicPort> getConnections() {
+        return connectedPorts;
     }
 }

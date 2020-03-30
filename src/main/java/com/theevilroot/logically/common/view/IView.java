@@ -1,4 +1,4 @@
-package com.theevilroot.logically.common.gui;
+package com.theevilroot.logically.common.view;
 
 import com.theevilroot.logically.common.math.Vector;
 

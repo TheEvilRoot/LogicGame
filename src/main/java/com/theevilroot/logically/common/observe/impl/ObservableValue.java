@@ -1,4 +1,8 @@
-package com.theevilroot.logically.common.observe;
+package com.theevilroot.logically.common.observe.impl;
+
+import com.theevilroot.logically.common.observe.MutableObservable;
+import com.theevilroot.logically.common.observe.Observable;
+import com.theevilroot.logically.common.observe.Observer;
 
 import java.util.HashMap;
 import java.util.HashSet;

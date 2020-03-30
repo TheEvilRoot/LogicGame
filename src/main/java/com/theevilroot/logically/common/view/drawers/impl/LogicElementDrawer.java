@@ -1,18 +1,14 @@
-package com.theevilroot.logically.common.gui.drawers;
+package com.theevilroot.logically.common.view.drawers.impl;
 
 import com.theevilroot.logically.common.elements.LogicElement;
-import com.theevilroot.logically.common.gui.IDrawer;
-import com.theevilroot.logically.common.gui.IDrawerFactory;
-import com.theevilroot.logically.common.gui.IView;
-import com.theevilroot.logically.common.gui.Resources;
+import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
+import com.theevilroot.logically.common.Resources;
+import com.theevilroot.logically.common.view.drawers.IDrawer;
 import com.theevilroot.logically.common.math.Vector;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.ports.LogicPort;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-
-import java.util.List;
 
 public class LogicElementDrawer implements IDrawer<LogicElement> {
 
@@ -20,8 +16,6 @@ public class LogicElementDrawer implements IDrawer<LogicElement> {
     public void drawElement(IDrawerFactory factory, GraphicsContext gc, Canvas cv, LogicElement view) {
         Vector xOffsets = getXOffset(view);
         Vector yOffsets = getYOffset(view);
-
-        gc.save();
 
         // Draw ~the blue~ box
         // Translate info start of box
@@ -38,18 +32,24 @@ public class LogicElementDrawer implements IDrawer<LogicElement> {
         gc.strokeRect(0, 0, boxSize.getX(), boxSize.getY());
 
         gc.restore();
-        gc.save();
-        gc.translate(view.getPosition().getX(), view.getPosition().getY());
+        gc.save(); // Coo-rds on circuit
 
         IDrawer<LogicPort> portsDrawer = (IDrawer<LogicPort>) factory.getDrawerFor(LogicPort.class);
         if (portsDrawer != null) {
-            view.getInputPorts().forEach(p -> portsDrawer.drawElement(factory, gc, cv, p));
+            view.getInputPorts().forEach(p -> {
+                gc.save();
+                portsDrawer.drawElement(factory, gc, cv, p);
+                gc.restore();
+            });
         } else throw new RuntimeException("port");
 
-        gc.translate(view.getSize().getX() - xOffsets.getY() * 2, 0);
         IDrawer<LogicPort> outPortDrawer = (IDrawer<LogicPort>) factory.getDrawerFor(LogicOutputPort.class);
         if (outPortDrawer != null) {
-            view.getOutputPorts().forEach(p -> outPortDrawer.drawElement(factory, gc, cv, p));
+            view.getOutputPorts().forEach(p -> {
+                gc.save();
+                outPortDrawer.drawElement(factory, gc, cv, p);
+                gc.restore();
+            });
         } else throw new RuntimeException("outport");
 
         gc.restore();

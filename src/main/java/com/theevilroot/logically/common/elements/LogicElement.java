@@ -1,18 +1,15 @@
 package com.theevilroot.logically.common.elements;
 
-import com.theevilroot.logically.common.gui.IView;
-import com.theevilroot.logically.common.gui.Resources;
-import com.theevilroot.logically.common.math.Vector;
+import com.theevilroot.logically.common.Resources;
 import com.theevilroot.logically.common.observe.Observer;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.ports.LogicPort;
+import com.theevilroot.logically.common.view.impl.BaseView;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class LogicElement implements Observer<Boolean>, IView {
-
-    private Vector position = new Vector(30f, 30f);
-    private Vector size = new Vector(Vector.UNIT);
+public abstract class LogicElement extends BaseView implements Observer<Boolean> {
 
     private final int inputCount;
     private final int outputCount;
@@ -21,32 +18,37 @@ public abstract class LogicElement implements Observer<Boolean>, IView {
     protected ArrayList<LogicOutputPort> outputPorts;
 
     public LogicElement(int inputCount, int outputCount) {
+        this(0, 0, inputCount, outputCount);
+    }
+
+    public LogicElement(double x, double y, int inputCount, int outputCount) {
+        super(x, y);
         this.inputCount = inputCount;
         this.outputCount = outputCount;
 
         recalculateSize();
+        initPorts();
+    }
 
+    private void initPorts() {
         this.inputPorts = new ArrayList<>();
         this.outputPorts = new ArrayList<>();
 
         double inDelta = getSize().getY() / (inputCount + 1);
         double outDelta = getSize().getY() / (outputCount + 1);
 
-        System.out.println(getSize());
-        System.out.println(outDelta);
-
         for (int i = 0; i < inputCount; i++) {
-            LogicPort port = new LogicPort(0, (i + 1) * inDelta);
+            LogicPort port = new LogicPort(getPosition().getX(), getPosition().getY() + (i + 1) * inDelta);
             inputPorts.add(port);
         }
         for(int i = 0; i < outputCount; i++) {
-            outputPorts.add(new LogicOutputPort(0, outDelta * (i + 1)));
+            outputPorts.add(new LogicOutputPort(getPosition().getX() + getSize().getX() - Resources.ELEMENT_PORT_RADIUS * 2,
+                    getPosition().getY() + outDelta * (i + 1)));
         }
 
         for (LogicPort p : inputPorts) {
             p.getObservableValue().subscribe(this);
         }
-
     }
 
     public int getOutputCount() {
@@ -92,18 +94,8 @@ public abstract class LogicElement implements Observer<Boolean>, IView {
                 '}';
     }
 
-    @Override
-    public Vector getPosition() {
-        return position;
-    }
-
-    @Override
-    public Vector getSize() {
-        return size;
-    }
-
     protected void recalculateSize() {
-        size.set(Resources.ELEMENT_WIDTH_UNIT, getInputCount() * (Resources.ELEMENT_HEIGHT_PER_WIRE + 1));
+        setSize(Resources.ELEMENT_WIDTH_UNIT, getInputCount() * (Resources.ELEMENT_HEIGHT_PER_WIRE + 1));
     }
 
     protected abstract boolean f(int outputIndex, Boolean[] inputValues);

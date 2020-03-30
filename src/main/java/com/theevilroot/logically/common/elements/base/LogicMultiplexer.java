@@ -8,10 +8,14 @@ public class LogicMultiplexer extends LogicElement {
     private final int valuePortCount;
     private final int controlPortCount;
 
-    public LogicMultiplexer(int valueInputCount) {
-        super(valueInputCount + (int) (Math.log(valueInputCount) / Math.log(2)) + 1, 1);
+    public LogicMultiplexer(double x, double y, int valueInputCount) {
+        super(x, y, valueInputCount + (int) (Math.log(valueInputCount) / Math.log(2)) + 1, 1);
         this.valuePortCount = valueInputCount;
         this.controlPortCount = (int) (Math.log(valueInputCount) / Math.log(2)) + 1;
+    }
+
+    public LogicMultiplexer(int valueInputCount) {
+        this(0, 0, valueInputCount);
     }
 
     public int getValuePortCount() {

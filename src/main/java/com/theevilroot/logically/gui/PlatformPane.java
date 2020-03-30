@@ -3,10 +3,11 @@ package com.theevilroot.logically.gui;
 
 import com.theevilroot.logically.common.elements.LogicCircuit;
 import com.theevilroot.logically.common.elements.base.LogicAndGate;
-import com.theevilroot.logically.common.gui.IDrawer;
-import com.theevilroot.logically.common.gui.IDrawerFactory;
-import com.theevilroot.logically.common.gui.IView;
-import com.theevilroot.logically.gui.drawable.SimpleDrawablePane;
+import com.theevilroot.logically.common.elements.base.LogicNotGate;
+import com.theevilroot.logically.common.elements.base.LogicOrGate;
+import com.theevilroot.logically.common.view.drawers.IDrawer;
+import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
+import com.theevilroot.logically.gui.drawable.impl.SimpleDrawablePane;
 import javafx.beans.InvalidationListener;
 import javafx.scene.canvas.Canvas;
 
@@ -18,7 +19,7 @@ public class PlatformPane extends SimpleDrawablePane {
     private IDrawerFactory drawerFactory;
 
     public PlatformPane(IDrawerFactory drawerFactory) {
-        this.circuit = new LogicCircuit(900, 600, 0, 0);
+        this.circuit = new LogicCircuit(0, 0, 900, 600);
         this.drawerFactory = drawerFactory;
 
         this.canvas = new Canvas();
@@ -31,7 +32,16 @@ public class PlatformPane extends SimpleDrawablePane {
 
         getChildren().add(canvas);
 
-        circuit.addElement(new LogicAndGate(3));
+        LogicAndGate and = new LogicAndGate(20f, 20f, 3);
+        LogicOrGate or = new LogicOrGate(350f, 20f, 2);
+        LogicNotGate not = new LogicNotGate(200f, 20f);
+
+        and.connectPort(0, not, 0);
+        not.connectPort(0, or, 0);
+
+        circuit.addElement(and);
+        circuit.addElement(or);
+        circuit.addElement(not);
 
         drawingTimer.start();
     }

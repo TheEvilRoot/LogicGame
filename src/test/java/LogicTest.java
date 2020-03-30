@@ -11,7 +11,7 @@ public class LogicTest {
 
     @Test
     public void testNotGate() {
-        LogicInputPanel panel = new LogicInputPanel(2, false, true);
+        LogicInputPanel panel = new LogicInputPanel(2).setValues(false, true);
         LogicNotGate not1 = new LogicNotGate();
         LogicNotGate not2 = new LogicNotGate();
 
@@ -29,7 +29,7 @@ public class LogicTest {
 
     @Test
     public void testAndGate() {
-        LogicInputPanel panel = new LogicInputPanel(8,
+        LogicInputPanel panel = new LogicInputPanel(8).setValues(
                 false, false,
                 true, false,
                 false, true,
@@ -53,7 +53,7 @@ public class LogicTest {
 
     @Test
     public void testOrGate() {
-        LogicInputPanel panel = new LogicInputPanel(8,
+        LogicInputPanel panel = new LogicInputPanel(8).setValues(
                 false, false,
                 true, false,
                 false, true,
@@ -79,7 +79,7 @@ public class LogicTest {
 
     @Test
     public void testXorGate() {
-        LogicInputPanel panel = new LogicInputPanel(8,
+        LogicInputPanel panel = new LogicInputPanel(8).setValues(
                 false, false,
                 true, false,
                 false, true,

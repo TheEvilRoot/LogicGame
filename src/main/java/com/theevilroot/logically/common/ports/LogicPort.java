@@ -1,26 +1,22 @@
 package com.theevilroot.logically.common.ports;
 
-import com.theevilroot.logically.common.gui.IView;
-import com.theevilroot.logically.common.gui.Resources;
-import com.theevilroot.logically.common.math.Vector;
+import com.theevilroot.logically.common.Resources;
 import com.theevilroot.logically.common.observe.MutableObservable;
 import com.theevilroot.logically.common.observe.Observable;
-import com.theevilroot.logically.common.observe.ObservableValue;
+import com.theevilroot.logically.common.observe.impl.ObservableValue;
+import com.theevilroot.logically.common.view.impl.BaseView;
 
-public class LogicPort implements IView {
+public class LogicPort extends BaseView {
 
     private MutableObservable<Boolean> value = new ObservableValue<>(false);
-    protected Vector position = new Vector(Vector.UNIT);
-    protected Vector size = new Vector(Vector.UNIT);
 
-    public LogicPort(double x, double y, boolean initialValue) {
-        this.value.setValue(initialValue);
-        this.position.set(x, y);
+    public LogicPort(double x, double y) {
+        super(x, y);
         recalculateSize();
     }
 
-    public LogicPort(double x, double y) {
-        this(x, y, false);
+    public LogicPort() {
+        this(0, 0);
     }
 
 
@@ -46,17 +42,8 @@ public class LogicPort implements IView {
         return "LogicPort{ value=" + value + "}";
     }
 
-    @Override
-    public Vector getPosition() {
-        return position;
-    }
-
-    @Override
-    public Vector getSize() {
-        return size;
-    }
 
     private void recalculateSize() {
-        size.set(Resources.ELEMENT_PORT_RADIUS * 2, Resources.ELEMENT_PORT_RADIUS * 2);
+        setSize(Resources.ELEMENT_PORT_RADIUS * 2, Resources.ELEMENT_PORT_RADIUS * 2);
     }
 }

@@ -1,11 +1,10 @@
-package com.theevilroot.logically.common.gui.drawers;
+package com.theevilroot.logically.common.view.drawers.impl;
 
 import com.theevilroot.logically.common.elements.LogicCircuit;
 import com.theevilroot.logically.common.elements.LogicElement;
-import com.theevilroot.logically.common.gui.IDrawer;
-import com.theevilroot.logically.common.gui.IDrawerFactory;
-import com.theevilroot.logically.common.gui.IView;
-import com.theevilroot.logically.common.gui.Resources;
+import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
+import com.theevilroot.logically.common.Resources;
+import com.theevilroot.logically.common.view.drawers.IDrawer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -13,9 +12,9 @@ public class LogicCircuitDrawer implements IDrawer<LogicCircuit> {
 
     @Override
     public void drawElement(IDrawerFactory factory, GraphicsContext gc, Canvas cv, LogicCircuit view) {
-
         gc.save();
         gc.translate(view.getPosition().getX(), view.getPosition().getY());
+
         gc.setFill(Resources.CIRCUIT_BACKGROUND_PRIMARY);
         gc.fillRect(0, 0, view.getSize().getX(), view.getSize().getY());
 
@@ -30,7 +29,9 @@ public class LogicCircuitDrawer implements IDrawer<LogicCircuit> {
         view.getElements().forEach(e -> {
             IDrawer<LogicElement> drawer = (IDrawer<LogicElement>) factory.getDrawerFor(e.getClass());
             if (drawer != null) {
+                gc.save();
                 drawer.drawElement(factory, gc, cv, e);
+                gc.restore();
             } else throw new RuntimeException(e.getClass().getCanonicalName());
         });
 

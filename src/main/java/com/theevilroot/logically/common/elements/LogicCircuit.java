@@ -1,21 +1,18 @@
 package com.theevilroot.logically.common.elements;
 
-import com.theevilroot.logically.common.gui.IView;
+import com.theevilroot.logically.common.view.IView;
 import com.theevilroot.logically.common.math.Vector;
+import com.theevilroot.logically.common.view.impl.BaseView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogicCircuit implements IView {
-
-    private Vector size;
-    private Vector position;
+public class LogicCircuit extends BaseView {
 
     private ArrayList<LogicElement> elements = new ArrayList<>();
 
-    public LogicCircuit(double width, double height, double x, double y) {
-        size = new Vector(width, height);
-        position = new Vector(x, y);
+    public LogicCircuit(double x, double y, double width, double height) {
+        super(x, y, width, height);
     }
 
     public void addElement(LogicElement element) {
@@ -26,13 +23,4 @@ public class LogicCircuit implements IView {
         return elements;
     }
 
-    @Override
-    public Vector getPosition() {
-        return position;
-    }
-
-    @Override
-    public Vector getSize() {
-        return size;
-    }
 }
