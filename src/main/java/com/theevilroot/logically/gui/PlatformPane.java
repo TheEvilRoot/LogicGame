@@ -26,7 +26,10 @@ public class PlatformPane extends SimpleDrawablePane {
         canvas.widthProperty().bind(this.widthProperty());
         canvas.heightProperty().bind(this.heightProperty());
 
-        InvalidationListener canvasResizeListener = (e) -> setDirty();
+        InvalidationListener canvasResizeListener = (e) -> {
+            circuit.setSize(canvas.getWidth(), canvas.getHeight());
+            setDirty();
+        };
         canvas.widthProperty().addListener(canvasResizeListener);
         canvas.heightProperty().addListener(canvasResizeListener);
 

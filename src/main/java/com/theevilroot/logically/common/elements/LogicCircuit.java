@@ -23,4 +23,8 @@ public class LogicCircuit extends BaseView {
         return elements;
     }
 
+    public void setSize(double w, double h) {
+        super.setSize(w, h);
+    }
+
 }
