@@ -1,17 +1,20 @@
 package com.theevilroot.logically.common.elements;
 
 import com.theevilroot.logically.common.mouse.MouseHandler;
-import com.theevilroot.logically.common.view.IView;
+import com.theevilroot.logically.common.mouse.MouseTrace;
 import com.theevilroot.logically.common.math.Vector;
+import com.theevilroot.logically.common.ports.LogicPort;
 import com.theevilroot.logically.common.view.impl.BaseView;
 import javafx.scene.input.MouseEvent;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class LogicCircuit extends BaseView implements MouseHandler {
 
     private ArrayList<LogicElement> elements = new ArrayList<>();
+
+    private LogicElement selectedElement = null;
+    private LogicElement hoverElement = null;
 
     public LogicCircuit(double x, double y, double width, double height) {
         super(x, y, width, height);
@@ -35,14 +38,73 @@ public class LogicCircuit extends BaseView implements MouseHandler {
     }
 
     @Override
-    public boolean handle(MouseEvent event, Vector relPos) {
+    public boolean handle(MouseEvent event, Vector relPos, MouseTrace trace) {
         if (relPos.getX() >= 0 && relPos.getY() >= 0 && relPos.getX() < getSize().getX() && relPos.getY() < getSize().getY()) {
-            System.out.println(this);
+            trace.addTrace(this);
             for (LogicElement e : elements) {
                 Vector relMouse = Vector.minus(relPos, e.getPosition());
-                if (e.handle(event, relMouse))
+                if (e.handle(event, relMouse, trace))
                     return true;
             }
+            trace.finish(this);
+            return true;
+        }
+        return false;
+    }
+
+    private void setSelectedElement(LogicElement e, Vector offset) {
+        selectedElement = e;
+        elements.forEach(f -> {
+            if (f.is(SELECTED))
+                f.unset(SELECTED);
+        });
+        if (selectedElement != null) {
+            selectedElement.set(SELECTED);
+            selectedElement.setSelectOffset(offset);
+        }
+    }
+
+    private void setHoverElement(LogicElement e, Vector offset) {
+        hoverElement = e;
+        elements.forEach(f -> {
+            if (f.is(HOVER))
+                f.unset(HOVER);
+        });
+        if (hoverElement != null) {
+            hoverElement.set(HOVER);
+            hoverElement.setSelectOffset(offset);
+        }
+    }
+
+    public void onCircuitClick(MouseEvent mouseEvent, Vector relMouse) {
+        if (hoverElement != null)
+            setHoverElement(null, Vector.UNIT);
+        if (selectedElement != null)
+            setSelectedElement(null, Vector.UNIT);
+    }
+
+    public void onElementClick(MouseEvent mouseEvent, Vector relMouse, LogicElement element) {
+        if (element == selectedElement) {
+            if (element == hoverElement) {
+                setSelectedElement(null, Vector.UNIT);
+                setHoverElement(null, Vector.UNIT);
+            } else {
+                setHoverElement(element, Vector.minus(relMouse, element.getPosition()));
+            }
+        } else {
+            setSelectedElement(element, Vector.minus(relMouse, element.getPosition()));
+            setHoverElement(null, Vector.UNIT);
+        }
+    }
+
+    public void onElementPortClick(MouseEvent mouseEvent, Vector relMouse, LogicElement lastTrace, LogicPort acceptor) {
+
+    }
+
+    public boolean handleHover(Vector mouse) {
+        if (hoverElement != null) {
+            hoverElement.setPosition(mouse.getX() - hoverElement.getSelectOffset().getX(), mouse.getY() - hoverElement.getSelectOffset().getY());
+            return true;
         }
         return false;
     }

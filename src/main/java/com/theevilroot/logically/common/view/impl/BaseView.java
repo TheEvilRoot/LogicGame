@@ -1,9 +1,10 @@
 package com.theevilroot.logically.common.view.impl;
 
 import com.theevilroot.logically.common.math.Vector;
+import com.theevilroot.logically.common.mouse.selection.impl.Selectable;
 import com.theevilroot.logically.common.view.IView;
 
-public class BaseView implements IView {
+public class BaseView extends Selectable implements IView {
 
     private Vector position = new Vector(Vector.UNIT);
     private Vector size = new Vector(Vector.UNIT);

@@ -13,8 +13,8 @@ public class DrawableTimer extends AnimationTimer {
     @Override
     public void handle(long l) {
         if (drawable.shouldBeRedrawn()) {
-            drawable.draw();
             drawable.resetDirty();
+            drawable.draw();
         }
     }
 }

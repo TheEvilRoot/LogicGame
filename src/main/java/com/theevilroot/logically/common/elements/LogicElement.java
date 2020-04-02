@@ -3,6 +3,7 @@ package com.theevilroot.logically.common.elements;
 import com.theevilroot.logically.common.Resources;
 import com.theevilroot.logically.common.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseHandler;
+import com.theevilroot.logically.common.mouse.MouseTrace;
 import com.theevilroot.logically.common.observe.Observer;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.ports.LogicPort;
@@ -41,16 +42,30 @@ public abstract class LogicElement extends BaseView implements Observer<Boolean>
         double outDelta = getSize().getY() / (outputCount + 1);
 
         for (int i = 0; i < inputCount; i++) {
-            LogicPort port = new LogicPort(getPosition().getX(), getPosition().getY() + (i + 1) * inDelta);
+            LogicPort port = new LogicPort();
             inputPorts.add(port);
         }
         for(int i = 0; i < outputCount; i++) {
-            outputPorts.add(new LogicOutputPort(getPosition().getX() + getSize().getX() - Resources.ELEMENT_PORT_RADIUS * 2,
-                    getPosition().getY() + outDelta * (i + 1)));
+            outputPorts.add(new LogicOutputPort());
         }
 
         for (LogicPort p : inputPorts) {
             p.getObservableValue().subscribe(this);
+        }
+
+        updatePortPositions();
+    }
+
+    private void updatePortPositions() {
+        double inDelta = getSize().getY() / (inputCount + 1);
+        double outDelta = getSize().getY() / (outputCount + 1);
+
+        for (int i = 0; i < inputCount; i++) {
+            inputPorts.get(i).setPosition(getPosition().getX(), getPosition().getY() + (i + 1) * inDelta);
+        }
+        for(int i = 0; i < outputCount; i++) {
+            outputPorts.get(i).setPosition(getPosition().getX() + getSize().getX() - Resources.ELEMENT_PORT_RADIUS * 2,
+                    getPosition().getY() + outDelta * (i + 1));
         }
     }
 
@@ -97,24 +112,37 @@ public abstract class LogicElement extends BaseView implements Observer<Boolean>
     }
 
     @Override
-    public boolean handle(MouseEvent event, Vector relPos) {
+    public boolean handle(MouseEvent event, Vector relPos, MouseTrace trace) {
         if (relPos.getX() >= 0 && relPos.getY() >= 0 && relPos.getX() < getSize().getX() && relPos.getY() < getSize().getY()) {
-            System.out.println(this);
+            trace.addTrace(this);
             for (LogicPort p : inputPorts) {
                 Vector relMouse = Vector.minus(relPos, Vector.minus(p.getPosition(), getPosition()));
                 relMouse.subtract(new Vector(Resources.ELEMENT_PORT_RADIUS, 0));
-                if (p.handle(event, relMouse))
+                if (p.handle(event, relMouse, trace))
                     return true;
             }
             for (LogicOutputPort p : outputPorts) {
                 Vector relMouse = Vector.minus(relPos, Vector.minus(p.getPosition(), getPosition()));
                 relMouse.subtract(new Vector(Resources.ELEMENT_PORT_RADIUS, 0));
-                if (p.handle(event, relMouse))
+                if (p.handle(event, relMouse, trace))
                     return true;
             }
+            trace.finish(this);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void setPosition(Vector fromVector) {
+        super.setPosition(fromVector);
+        updatePortPositions();
+    }
+
+    @Override
+    public void setPosition(double x, double y) {
+        super.setPosition(x, y);
+        updatePortPositions();
     }
 
     protected abstract boolean f(int outputIndex, Boolean[] inputValues);

@@ -5,6 +5,6 @@ import javafx.scene.input.MouseEvent;
 
 public interface MouseHandler {
 
-    boolean handle(MouseEvent event, Vector relPos);
+    boolean handle(MouseEvent event, Vector relPos, MouseTrace trace);
 
 }

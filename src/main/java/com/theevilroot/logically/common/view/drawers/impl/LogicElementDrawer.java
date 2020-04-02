@@ -1,6 +1,8 @@
 package com.theevilroot.logically.common.view.drawers.impl;
 
 import com.theevilroot.logically.common.elements.LogicElement;
+import com.theevilroot.logically.common.mouse.selection.ISelectable;
+import com.theevilroot.logically.common.mouse.selection.impl.Selectable;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
 import com.theevilroot.logically.common.Resources;
 import com.theevilroot.logically.common.view.drawers.IDrawer;
@@ -9,6 +11,7 @@ import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.ports.LogicPort;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Paint;
 
 public class LogicElementDrawer implements IDrawer<LogicElement> {
 
@@ -21,9 +24,10 @@ public class LogicElementDrawer implements IDrawer<LogicElement> {
         // Translate info start of box
         gc.translate(view.getPosition().getX() + xOffsets.getX(), view.getPosition().getY() + yOffsets.getX());
 
-        gc.setFill(Resources.ELEMENT_BACKGROUND_COLOR);
-        gc.setStroke(Resources.ELEMENT_STROKE_COLOR);
-        gc.setLineWidth(Resources.ELEMENT_STROKE_WIDTH);
+        gc.setLineWidth(Resources.getElementStrokeWidth(view.getState()));
+        gc.setFill(Resources.getElementBackgroundColor(view.getState()));
+        gc.setStroke(Resources.getElementStrokeColor(view.getState()));
+
 
         // Draw box with width (width - (start offset + end offset), height - (top offset + bottom offset))
         Vector boxSize = Vector.minus(view.getSize(), new Vector(xOffsets.xySum(), yOffsets.xySum()));

@@ -2,10 +2,14 @@ package com.theevilroot.logically.gui;
 
 
 import com.theevilroot.logically.common.elements.LogicCircuit;
+import com.theevilroot.logically.common.elements.LogicElement;
 import com.theevilroot.logically.common.elements.base.LogicAndGate;
 import com.theevilroot.logically.common.elements.base.LogicNotGate;
 import com.theevilroot.logically.common.elements.base.LogicOrGate;
 import com.theevilroot.logically.common.math.Vector;
+import com.theevilroot.logically.common.mouse.MouseHandler;
+import com.theevilroot.logically.common.mouse.MouseTrace;
+import com.theevilroot.logically.common.ports.LogicPort;
 import com.theevilroot.logically.common.view.drawers.IDrawer;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
 import com.theevilroot.logically.gui.drawable.impl.SimpleDrawablePane;
@@ -21,8 +25,10 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
     private LogicCircuit circuit;
     private IDrawerFactory drawerFactory;
 
+    private Vector mouse = new Vector(Vector.UNIT);
+
     public PlatformPane(IDrawerFactory drawerFactory) {
-        this.circuit = new LogicCircuit(0, 0, 900, 600);
+        this.circuit = new LogicCircuit(0, 0, 600, 900);
         this.drawerFactory = drawerFactory;
 
         this.canvas = new Canvas();
@@ -35,6 +41,8 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
         };
         canvas.widthProperty().addListener(canvasResizeListener);
         canvas.heightProperty().addListener(canvasResizeListener);
+
+        canvas.setOnMouseMoved(e -> mouse.set(e.getX(), e.getY()));
 
         canvas.setOnMouseClicked(this);
 
@@ -55,10 +63,13 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
     }
 
     public void draw() {
+        boolean shouldBeRedrawnLater = circuit.handleHover(mouse);
         IDrawer<LogicCircuit> drawer = (IDrawer<LogicCircuit>) drawerFactory.getDrawerFor(circuit.getClass());
         if (drawer != null)
             drawer.drawElement(drawerFactory, canvas.getGraphicsContext2D(), canvas, circuit);
         else throw new RuntimeException("circuit");
+        if (shouldBeRedrawnLater)
+            setDirty();
     }
 
     @Override
@@ -70,6 +81,21 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
     public void handle(MouseEvent mouseEvent) {
         Vector absMouse = new Vector(mouseEvent.getX(), mouseEvent.getY());
         Vector relMouse = Vector.minus(absMouse, circuit.getPosition());
-        circuit.handle(mouseEvent, relMouse);
+        MouseTrace trace = new MouseTrace();
+        circuit.handle(mouseEvent, relMouse, trace);
+        if (trace.getAcceptor() == null)
+            return;
+        MouseHandler acceptor = trace.getAcceptor();
+        if (acceptor instanceof LogicCircuit) {
+            circuit.onCircuitClick(mouseEvent, relMouse);
+        } else if (acceptor instanceof LogicElement) {
+            circuit.onElementClick(mouseEvent, relMouse, (LogicElement) acceptor);
+        } else if (acceptor instanceof LogicPort) {
+            MouseHandler lastTrace = trace.getTrace().get(trace.getTrace().size() - 1);
+            if (lastTrace instanceof LogicElement)
+                circuit.onElementPortClick(mouseEvent, relMouse, (LogicElement) lastTrace, (LogicPort) acceptor);
+        }
+
+        setDirty();
     }
 }

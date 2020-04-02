@@ -3,6 +3,7 @@ package com.theevilroot.logically.common.ports;
 import com.theevilroot.logically.common.Resources;
 import com.theevilroot.logically.common.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseHandler;
+import com.theevilroot.logically.common.mouse.MouseTrace;
 import com.theevilroot.logically.common.observe.MutableObservable;
 import com.theevilroot.logically.common.observe.Observable;
 import com.theevilroot.logically.common.observe.impl.ObservableValue;
@@ -51,9 +52,9 @@ public class LogicPort extends BaseView implements MouseHandler {
     }
 
     @Override
-    public boolean handle(MouseEvent event, Vector relPos) {
+    public boolean handle(MouseEvent event, Vector relPos, MouseTrace trace) {
         if (Math.abs(relPos.getMag()) < Resources.ELEMENT_PORT_RADIUS) {
-            System.out.println(this);
+            trace.finish(this);
             return true;
         }
         return false;
