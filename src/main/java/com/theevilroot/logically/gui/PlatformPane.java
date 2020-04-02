@@ -3,6 +3,7 @@ package com.theevilroot.logically.gui;
 
 import com.theevilroot.logically.common.elements.LogicCircuit;
 import com.theevilroot.logically.common.elements.LogicElement;
+import com.theevilroot.logically.common.elements.LogicInputPanel;
 import com.theevilroot.logically.common.elements.base.LogicAndGate;
 import com.theevilroot.logically.common.elements.base.LogicNotGate;
 import com.theevilroot.logically.common.elements.base.LogicOrGate;
@@ -48,6 +49,8 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
 
         getChildren().add(canvas);
 
+        LogicInputPanel input = new LogicInputPanel(200f, 40f, 4);
+
         LogicAndGate and = new LogicAndGate(20f, 20f, 3);
         LogicOrGate or = new LogicOrGate(350f, 20f, 2);
         LogicNotGate not = new LogicNotGate(200f, 20f);
@@ -55,9 +58,16 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
         and.connectPort(0, not, 0);
         not.connectPort(0, or, 0);
 
+        input.connectPort(0, and, 0);
+        input.connectPort(1, and, 1);
+        input.connectPort(2, and, 2);
+        input.connectPort(3, or, 1);
+
+
         circuit.addElement(not);
         circuit.addElement(and);
         circuit.addElement(or);
+        circuit.addElement(input);
 
         drawingTimer.start();
     }
@@ -83,17 +93,17 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
         Vector relMouse = Vector.minus(absMouse, circuit.getPosition());
         MouseTrace trace = new MouseTrace();
         circuit.handle(mouseEvent, relMouse, trace);
-        if (trace.getAcceptor() == null)
-            return;
-        MouseHandler acceptor = trace.getAcceptor();
-        if (acceptor instanceof LogicCircuit) {
-            circuit.onCircuitClick(mouseEvent, relMouse);
-        } else if (acceptor instanceof LogicElement) {
-            circuit.onElementClick(mouseEvent, relMouse, (LogicElement) acceptor);
-        } else if (acceptor instanceof LogicPort) {
-            MouseHandler lastTrace = trace.getTrace().get(trace.getTrace().size() - 1);
-            if (lastTrace instanceof LogicElement)
-                circuit.onElementPortClick(mouseEvent, relMouse, (LogicElement) lastTrace, (LogicPort) acceptor);
+        if (trace.getAcceptor() != null) {
+            MouseHandler acceptor = trace.getAcceptor();
+            if (acceptor instanceof LogicCircuit) {
+                circuit.onCircuitClick(mouseEvent, relMouse);
+            } else if (acceptor instanceof LogicElement) {
+                circuit.onElementClick(mouseEvent, relMouse, (LogicElement) acceptor);
+            } else if (acceptor instanceof LogicPort) {
+                MouseHandler lastTrace = trace.getTrace().get(trace.getTrace().size() - 1);
+                if (lastTrace instanceof LogicElement)
+                    circuit.onElementPortClick(mouseEvent, relMouse, (LogicElement) lastTrace, (LogicPort) acceptor);
+            }
         }
 
         setDirty();

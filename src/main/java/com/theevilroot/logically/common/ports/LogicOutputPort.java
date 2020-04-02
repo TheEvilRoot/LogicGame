@@ -1,5 +1,10 @@
 package com.theevilroot.logically.common.ports;
 
+import com.theevilroot.logically.common.elements.LogicElement;
+import com.theevilroot.logically.common.math.Vector;
+import com.theevilroot.logically.common.mouse.MouseTrace;
+import javafx.scene.input.MouseEvent;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,12 +13,12 @@ public class LogicOutputPort extends LogicPort {
 
     private ArrayList<LogicPort> connectedPorts = new ArrayList<>();
 
-    public LogicOutputPort(double x, double y) {
-        super(x, y);
+    public LogicOutputPort(LogicElement parent, double x, double y) {
+        super(parent, x, y);
     }
 
-    public LogicOutputPort() {
-        super();
+    public LogicOutputPort(LogicElement parent) {
+        super(parent);
     }
 
     public LogicOutputPort connect(LogicPort port) {
@@ -36,4 +41,5 @@ public class LogicOutputPort extends LogicPort {
     public List<LogicPort> getConnections() {
         return connectedPorts;
     }
+
 }

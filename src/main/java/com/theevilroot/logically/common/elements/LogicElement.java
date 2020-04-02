@@ -42,11 +42,11 @@ public abstract class LogicElement extends BaseView implements Observer<Boolean>
         double outDelta = getSize().getY() / (outputCount + 1);
 
         for (int i = 0; i < inputCount; i++) {
-            LogicPort port = new LogicPort();
+            LogicPort port = new LogicPort(this);
             inputPorts.add(port);
         }
         for(int i = 0; i < outputCount; i++) {
-            outputPorts.add(new LogicOutputPort());
+            outputPorts.add(new LogicOutputPort(this));
         }
 
         for (LogicPort p : inputPorts) {

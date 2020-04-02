@@ -22,7 +22,7 @@ public class LogicOutputPortDrawer implements IDrawer<LogicOutputPort> {
         gc.setStroke(view.getValue() ? Resources.PORT_ACTIVE_COLOR : Resources.PORT_INACTIVE_COLOR);
 
         view.getConnections().forEach(c -> {
-            connection(gc, view.getPosition(), c.getPosition(), new Vector(view.getPosition().getX(), c.getPosition().getY()));
+            connection(gc, view.getPosition(), c.getPosition(), new Vector(c.getPosition().getX(), view.getPosition().getY()));
         });
     }
 

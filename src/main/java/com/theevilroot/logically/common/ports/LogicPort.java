@@ -1,6 +1,8 @@
 package com.theevilroot.logically.common.ports;
 
 import com.theevilroot.logically.common.Resources;
+import com.theevilroot.logically.common.elements.LogicElement;
+import com.theevilroot.logically.common.elements.LogicInputPanel;
 import com.theevilroot.logically.common.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseHandler;
 import com.theevilroot.logically.common.mouse.MouseTrace;
@@ -13,14 +15,16 @@ import javafx.scene.input.MouseEvent;
 public class LogicPort extends BaseView implements MouseHandler {
 
     private MutableObservable<Boolean> value = new ObservableValue<>(false);
+    private LogicElement parent;
 
-    public LogicPort(double x, double y) {
+    public LogicPort(LogicElement parent, double x, double y) {
         super(x, y);
+        this.parent = parent;
         recalculateSize();
     }
 
-    public LogicPort() {
-        this(0, 0);
+    public LogicPort(LogicElement parent) {
+        this(parent, 0, 0);
     }
 
 
@@ -54,6 +58,10 @@ public class LogicPort extends BaseView implements MouseHandler {
     @Override
     public boolean handle(MouseEvent event, Vector relPos, MouseTrace trace) {
         if (Math.abs(relPos.getMag()) < Resources.ELEMENT_PORT_RADIUS) {
+            if (parent instanceof LogicInputPanel) {
+                triggerValue();
+                return true;
+            }
             trace.finish(this);
             return true;
         }
