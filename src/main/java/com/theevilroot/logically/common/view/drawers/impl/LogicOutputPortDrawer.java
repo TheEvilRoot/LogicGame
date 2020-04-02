@@ -19,7 +19,6 @@ public class LogicOutputPortDrawer implements IDrawer<LogicOutputPort> {
         gc.fillOval(view.getPosition().getX() + Resources.ELEMENT_PORT_RADIUS - 4, view.getPosition().getY() - 4, 8, 8);
 
         gc.setLineWidth(2f);
-        System.out.println(view.getValue());
         gc.setStroke(view.getValue() ? Resources.PORT_ACTIVE_COLOR : Resources.PORT_INACTIVE_COLOR);
 
         view.getConnections().forEach(c -> {

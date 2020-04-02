@@ -2,6 +2,7 @@ package com.theevilroot.logically.common.view.drawers.impl;
 
 import com.theevilroot.logically.common.elements.LogicElement;
 import com.theevilroot.logically.common.mouse.selection.ISelectable;
+import com.theevilroot.logically.common.mouse.selection.State;
 import com.theevilroot.logically.common.mouse.selection.impl.Selectable;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
 import com.theevilroot.logically.common.Resources;
@@ -22,7 +23,16 @@ public class LogicElementDrawer implements IDrawer<LogicElement> {
 
         // Draw ~the blue~ box
         // Translate info start of box
-        gc.translate(view.getPosition().getX() + xOffsets.getX(), view.getPosition().getY() + yOffsets.getX());
+        gc.translate(view.getPosition().getX(), view.getPosition().getY());
+
+        if (view.getState() == State.SELECTED) {
+            double selectionOffset = Resources.getElementStrokeWidth(view.getState()) / 2;
+            gc.setStroke(Resources.ELEMENT_SELECTION_BOX_COLOR);
+            gc.setLineWidth(Resources.ELEMENT_SELECTION_BOX_WIDTH);
+            gc.strokeRect(0, -selectionOffset, view.getSize().getX(), view.getSize().getY() + selectionOffset * 2);
+        }
+
+        gc.translate(xOffsets.getX(), yOffsets.getX());
 
         gc.setLineWidth(Resources.getElementStrokeWidth(view.getState()));
         gc.setFill(Resources.getElementBackgroundColor(view.getState()));

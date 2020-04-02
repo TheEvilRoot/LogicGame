@@ -13,15 +13,15 @@ public class Resources {
 
     public static final Paint ELEMENT_BACKGROUND_COLOR = Paint.valueOf("#ffffff");
 
-    public static final Paint SELECTED_ELEMENT_BACKGROUND_COLOR = Paint.valueOf("#Afffff");
+    public static final Paint SELECTED_ELEMENT_BACKGROUND_COLOR = Paint.valueOf("#ffffff");
 
-    public static final Paint HOVER_ELEMENT_BACKGROUND_COLOR = Paint.valueOf("#00ffff");
+    public static final Paint HOVER_ELEMENT_BACKGROUND_COLOR = Paint.valueOf("#ffffff");
 
     public static final Paint ELEMENT_STROKE_COLOR = Paint.valueOf("#ffffff4A");
 
-    public static final Paint SELECTED_ELEMENT_STROKE_COLOR = Paint.valueOf("#Afffff4A");
+    public static final Paint SELECTED_ELEMENT_STROKE_COLOR = Paint.valueOf("#ffffff4A");
 
-    public static final Paint HOVER_ELEMENT_STROKE_COLOR = Paint.valueOf("#fffAff4A");
+    public static final Paint HOVER_ELEMENT_STROKE_COLOR = Paint.valueOf("#ffffff4A");
 
     public static final Double ELEMENT_STROKE_WIDTH = 10d;
 
@@ -35,13 +35,17 @@ public class Resources {
 
     public static final Paint ELEMENT_TEXT_COLOR = Paint.valueOf("#000000");
 
-    public static final Paint CIRCUIT_BACKGROUND_PRIMARY = Paint.valueOf("#0d400d");
+    public static final Paint CIRCUIT_BACKGROUND_PRIMARY = Paint.valueOf("#424d93");
 
     public static final Paint CIRCUIT_BACKGROUND_SECONDARY = Paint.valueOf("#ffffff0A");
 
     public static final Paint PORT_ACTIVE_COLOR = Paint.valueOf("#00ff00");
 
     public static final Paint PORT_INACTIVE_COLOR = Paint.valueOf("#ff0000");
+
+    public static final Paint ELEMENT_SELECTION_BOX_COLOR = Paint.valueOf("#ffffffAA");
+
+    public static final Double ELEMENT_SELECTION_BOX_WIDTH = 2d;
 
     public static Paint getElementBackgroundColor(State state) {
         switch (state) {
