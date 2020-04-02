@@ -23,11 +23,11 @@ public class Resources {
 
     public static final Paint HOVER_ELEMENT_STROKE_COLOR = Paint.valueOf("#ffffff4A");
 
-    public static final Double ELEMENT_STROKE_WIDTH = 10d;
+    public static final Double ELEMENT_STROKE_WIDTH = 8d;
 
-    public static final Double SELECTED_ELEMENT_STROKE_WIDTH = 10d;
+    public static final Double SELECTED_ELEMENT_STROKE_WIDTH = 8d;
 
-    public static final Double HOVER_ELEMENT_STROKE_WIDTH = 10d;
+    public static final Double HOVER_ELEMENT_STROKE_WIDTH = 8d;
 
     public static final Paint ELEMENT_FOREGROUND_COLOR = Paint.valueOf("#000000");
 
