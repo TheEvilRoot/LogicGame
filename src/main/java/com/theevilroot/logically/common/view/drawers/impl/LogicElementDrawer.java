@@ -13,6 +13,8 @@ import com.theevilroot.logically.common.ports.LogicPort;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeLineJoin;
 
 public class LogicElementDrawer implements IDrawer<LogicElement> {
 
@@ -26,10 +28,9 @@ public class LogicElementDrawer implements IDrawer<LogicElement> {
         gc.translate(view.getPosition().getX(), view.getPosition().getY());
 
         if (view.getState() == State.SELECTED) {
-            double selectionOffset = Resources.getElementStrokeWidth(view.getState()) / 2;
             gc.setStroke(Resources.ELEMENT_SELECTION_BOX_COLOR);
             gc.setLineWidth(Resources.ELEMENT_SELECTION_BOX_WIDTH);
-            gc.strokeRect(0, -selectionOffset, view.getSize().getX(), view.getSize().getY() + selectionOffset * 2);
+            gc.strokeRect(0, 0, view.getSize().getX(), view.getSize().getY() + 0);
         }
 
         gc.translate(xOffsets.getX(), yOffsets.getX());
@@ -38,12 +39,25 @@ public class LogicElementDrawer implements IDrawer<LogicElement> {
         gc.setFill(Resources.getElementBackgroundColor(view.getState()));
         gc.setStroke(Resources.getElementStrokeColor(view.getState()));
 
+        // When I write this, only me and god know what the fuck is that
+        // Now, only god do.
+        // Good luck
+        Vector boxSize = Vector.minus(Vector.minus(view.getSize(),
+                new Vector(xOffsets.xySum(), yOffsets.xySum())),
+                new Vector(Resources.getElementStrokeWidth(view.getState()) * 2,
+                        Resources.getElementStrokeWidth(view.getState()) * 2));
 
-        // Draw box with width (width - (start offset + end offset), height - (top offset + bottom offset))
-        Vector boxSize = Vector.minus(view.getSize(), new Vector(xOffsets.xySum(), yOffsets.xySum()));
-        gc.fillRect(0, 0, boxSize.getX(), boxSize.getY());
+        gc.fillRect(Resources.getElementStrokeWidth(view.getState()),
+                Resources.getElementStrokeWidth(view.getState()) ,
+                boxSize.getX(),
+                boxSize.getY()) ;
 
-        gc.strokeRect(0, 0, boxSize.getX(), boxSize.getY());
+        gc.setLineJoin(StrokeLineJoin.BEVEL);
+        gc.setLineCap(StrokeLineCap.ROUND);
+        gc.strokeRect(Resources.getElementStrokeWidth(view.getState()) / 2,
+               Resources.getElementStrokeWidth(view.getState()) / 2,
+               boxSize.getX() + Resources.getElementStrokeWidth(view.getState()),
+                boxSize.getY() + Resources.getElementStrokeWidth(view.getState()));
 
         gc.restore();
         gc.save(); // Coo-rds on circuit
@@ -72,7 +86,7 @@ public class LogicElementDrawer implements IDrawer<LogicElement> {
 
     private Vector getXOffset(LogicElement e) {
         return new Vector(
-                e.getOutputCount() > 0 ? Resources.ELEMENT_PORT_RADIUS : 0,
+                e.getInputCount() > 0 ? Resources.ELEMENT_PORT_RADIUS : 0,
                 e.getOutputCount() > 0 ? Resources.ELEMENT_PORT_RADIUS : 0
         );
     }

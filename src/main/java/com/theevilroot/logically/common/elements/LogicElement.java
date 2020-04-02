@@ -108,7 +108,8 @@ public abstract class LogicElement extends BaseView implements Observer<Boolean>
     }
 
     protected void recalculateSize() {
-        setSize(Resources.ELEMENT_WIDTH_UNIT, getInputCount() * (Resources.ELEMENT_HEIGHT_PER_WIRE + 1));
+        int portCount = Math.max(getInputCount(), getOutputCount());
+        setSize(Resources.ELEMENT_WIDTH_UNIT, (portCount + 1) * (Resources.ELEMENT_HEIGHT_PER_WIRE ));
     }
 
     @Override

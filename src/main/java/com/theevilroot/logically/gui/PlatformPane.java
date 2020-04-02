@@ -4,6 +4,7 @@ package com.theevilroot.logically.gui;
 import com.theevilroot.logically.common.elements.LogicCircuit;
 import com.theevilroot.logically.common.elements.LogicElement;
 import com.theevilroot.logically.common.elements.LogicInputPanel;
+import com.theevilroot.logically.common.elements.LogicOutputPanel;
 import com.theevilroot.logically.common.elements.base.LogicAndGate;
 import com.theevilroot.logically.common.elements.base.LogicNotGate;
 import com.theevilroot.logically.common.elements.base.LogicOrGate;
@@ -50,6 +51,7 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
         getChildren().add(canvas);
 
         LogicInputPanel input = new LogicInputPanel(200f, 40f, 4);
+        LogicOutputPanel output = new LogicOutputPanel(100f, 50f, 1);
 
         LogicAndGate and = new LogicAndGate(20f, 20f, 3);
         LogicOrGate or = new LogicOrGate(350f, 20f, 2);
@@ -63,11 +65,14 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
         input.connectPort(2, and, 2);
         input.connectPort(3, or, 1);
 
+        or.connectPort(0, output, 0);
+
 
         circuit.addElement(not);
         circuit.addElement(and);
         circuit.addElement(or);
         circuit.addElement(input);
+        circuit.addElement(output);
 
         drawingTimer.start();
     }
