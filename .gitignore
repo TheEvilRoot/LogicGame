@@ -2,6 +2,5 @@
 .gradle/
 .idea/
 build/
-gradle/
 *.swp
 out/
