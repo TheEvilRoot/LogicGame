@@ -37,6 +37,10 @@ public class LogicPort extends BaseView implements MouseHandler {
         return this;
     }
 
+    public LogicElement getParent() {
+        return parent;
+    }
+
     public Observable<Boolean> getObservableValue() {
         return value;
     }
@@ -58,10 +62,6 @@ public class LogicPort extends BaseView implements MouseHandler {
     @Override
     public boolean handle(MouseEvent event, Vector relPos, MouseTrace trace) {
         if (Math.abs(relPos.getMag()) < Resources.ELEMENT_PORT_RADIUS) {
-            if (parent instanceof LogicInputPanel) {
-                triggerValue();
-                return true;
-            }
             trace.finish(this);
             return true;
         }

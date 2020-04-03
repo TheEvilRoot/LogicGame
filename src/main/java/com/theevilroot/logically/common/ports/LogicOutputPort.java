@@ -1,6 +1,8 @@
 package com.theevilroot.logically.common.ports;
 
+import com.theevilroot.logically.common.Resources;
 import com.theevilroot.logically.common.elements.LogicElement;
+import com.theevilroot.logically.common.elements.LogicInputPanel;
 import com.theevilroot.logically.common.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseTrace;
 import javafx.scene.input.MouseEvent;
@@ -42,4 +44,16 @@ public class LogicOutputPort extends LogicPort {
         return connectedPorts;
     }
 
+    @Override
+    public boolean handle(MouseEvent event, Vector relPos, MouseTrace trace) {
+        if (Math.abs(relPos.getMag()) < Resources.ELEMENT_PORT_RADIUS) {
+            if (getParent() instanceof LogicInputPanel) {
+                triggerValue();
+                return true;
+            }
+            trace.finish(this);
+            return true;
+        }
+        return false;
+    }
 }
