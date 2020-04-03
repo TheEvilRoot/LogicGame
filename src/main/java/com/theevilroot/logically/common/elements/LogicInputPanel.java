@@ -1,5 +1,7 @@
 package com.theevilroot.logically.common.elements;
 
+import com.theevilroot.logically.common.ports.LogicOutputPort;
+
 public class LogicInputPanel extends LogicElement {
 
     public LogicInputPanel(double x, double y, int ports) {
@@ -23,7 +25,9 @@ public class LogicInputPanel extends LogicElement {
     }
 
     @Override
-    public void update() { }
+    public void update() {
+        outputPorts.forEach(LogicOutputPort::updateConnections);
+    }
 
     @Override
     protected boolean f(int outputIndex, Boolean[] inputValues) {

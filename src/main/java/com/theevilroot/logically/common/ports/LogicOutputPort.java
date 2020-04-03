@@ -36,12 +36,16 @@ public class LogicOutputPort extends LogicPort {
     @Override
     public LogicPort setValue(boolean value) {
         super.setValue(value);
-        connectedPorts.forEach((connection) -> connection.setValue(this.getValue()));
+        updateConnections();
         return this;
     }
 
     public List<LogicPort> getConnections() {
         return connectedPorts;
+    }
+
+    public void updateConnections() {
+        connectedPorts.forEach((connection) -> connection.setValue(this.getValue()));
     }
 
     @Override
