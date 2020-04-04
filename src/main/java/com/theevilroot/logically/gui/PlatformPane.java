@@ -50,8 +50,8 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
 
         getChildren().add(canvas);
 
-        LogicInputPanel input = new LogicInputPanel(200f, 40f, 4);
-        LogicOutputPanel output = new LogicOutputPanel(100f, 50f, 1);
+        LogicInputPanel input = new LogicInputPanel(-50f, 0, 4);
+        LogicOutputPanel output = new LogicOutputPanel(500f, 0f, 1);
 
         LogicAndGate and = new LogicAndGate(20f, 20f, 3);
         LogicOrGate or = new LogicOrGate(350f, 20f, 2);

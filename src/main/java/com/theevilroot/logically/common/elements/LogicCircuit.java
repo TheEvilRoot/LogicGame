@@ -3,6 +3,7 @@ package com.theevilroot.logically.common.elements;
 import com.theevilroot.logically.common.mouse.MouseHandler;
 import com.theevilroot.logically.common.mouse.MouseTrace;
 import com.theevilroot.logically.common.math.Vector;
+import com.theevilroot.logically.common.mouse.selection.State;
 import com.theevilroot.logically.common.ports.LogicPort;
 import com.theevilroot.logically.common.view.impl.BaseView;
 import javafx.scene.input.MouseEvent;
@@ -53,26 +54,30 @@ public class LogicCircuit extends BaseView implements MouseHandler {
     }
 
     private void setSelectedElement(LogicElement e, Vector offset) {
-        selectedElement = e;
-        elements.forEach(f -> {
-            if (f.is(SELECTED))
-                f.unset(SELECTED);
-        });
-        if (selectedElement != null) {
-            selectedElement.set(SELECTED);
-            selectedElement.setSelectOffset(offset);
+        if (e == null || e.canHaveState(State.SELECTED)) {
+            selectedElement = e;
+            elements.forEach(f -> {
+                if (f.is(SELECTED))
+                    f.unset(SELECTED);
+            });
+            if (selectedElement != null) {
+                selectedElement.set(SELECTED);
+                selectedElement.setSelectOffset(offset);
+            }
         }
     }
 
     private void setHoverElement(LogicElement e, Vector offset) {
-        hoverElement = e;
-        elements.forEach(f -> {
-            if (f.is(HOVER))
-                f.unset(HOVER);
-        });
-        if (hoverElement != null) {
-            hoverElement.set(HOVER);
-            hoverElement.setSelectOffset(offset);
+        if (e == null || e.canHaveState(State.HOVER)) {
+            hoverElement = e;
+            elements.forEach(f -> {
+                if (f.is(HOVER))
+                    f.unset(HOVER);
+            });
+            if (hoverElement != null) {
+                hoverElement.set(HOVER);
+                hoverElement.setSelectOffset(offset);
+            }
         }
     }
 

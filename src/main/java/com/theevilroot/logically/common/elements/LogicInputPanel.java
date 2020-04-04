@@ -1,5 +1,6 @@
 package com.theevilroot.logically.common.elements;
 
+import com.theevilroot.logically.common.mouse.selection.State;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 
 public class LogicInputPanel extends LogicElement {
@@ -34,4 +35,8 @@ public class LogicInputPanel extends LogicElement {
         return false;
     }
 
+    @Override
+    public boolean canHaveState(State state) {
+        return !(state == State.HOVER);
+    }
 }

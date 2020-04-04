@@ -1,6 +1,8 @@
 package com.theevilroot.logically.common.mouse.selection;
 
-public interface ISelectable {
+public interface IStateful {
+
+    boolean canHaveState(State state);
 
     boolean is(int mask);
 

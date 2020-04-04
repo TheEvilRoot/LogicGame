@@ -1,9 +1,7 @@
 package com.theevilroot.logically.common.view.drawers.impl;
 
 import com.theevilroot.logically.common.elements.LogicElement;
-import com.theevilroot.logically.common.mouse.selection.ISelectable;
 import com.theevilroot.logically.common.mouse.selection.State;
-import com.theevilroot.logically.common.mouse.selection.impl.Selectable;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
 import com.theevilroot.logically.common.Resources;
 import com.theevilroot.logically.common.view.drawers.IDrawer;
@@ -12,7 +10,6 @@ import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.ports.LogicPort;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 

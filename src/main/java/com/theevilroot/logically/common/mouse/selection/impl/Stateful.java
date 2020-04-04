@@ -1,10 +1,10 @@
 package com.theevilroot.logically.common.mouse.selection.impl;
 
 import com.theevilroot.logically.common.math.Vector;
-import com.theevilroot.logically.common.mouse.selection.ISelectable;
+import com.theevilroot.logically.common.mouse.selection.IStateful;
 import com.theevilroot.logically.common.mouse.selection.State;
 
-public class Selectable implements ISelectable {
+public class Stateful implements IStateful {
 
     public static final int SELECTED = 1;
     public static final int HOVER = 2;
@@ -19,7 +19,8 @@ public class Selectable implements ISelectable {
 
     @Override
     public void set(int mask) {
-        state |= mask;
+        if (canHaveState(State.fromState(state)))
+            state |= mask;
     }
 
     @Override
@@ -44,4 +45,8 @@ public class Selectable implements ISelectable {
         return selectOffset;
     }
 
+    @Override
+    public boolean canHaveState(State state) {
+        return true;
+    }
 }
