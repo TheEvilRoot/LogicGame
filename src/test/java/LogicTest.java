@@ -1,5 +1,5 @@
-import com.theevilroot.logically.common.elements.LogicInputPanel;
-import com.theevilroot.logically.common.elements.LogicOutputPanel;
+import com.theevilroot.logically.common.elements.control.LogicInputPanel;
+import com.theevilroot.logically.common.elements.control.LogicOutputPanel;
 import com.theevilroot.logically.common.elements.base.LogicAndGate;
 import com.theevilroot.logically.common.elements.base.LogicNotGate;
 import com.theevilroot.logically.common.elements.base.LogicOrGate;

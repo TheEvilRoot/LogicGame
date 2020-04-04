@@ -1,5 +1,6 @@
-package com.theevilroot.logically.common.elements;
+package com.theevilroot.logically.common.elements.control;
 
+import com.theevilroot.logically.common.elements.LogicElement;
 import com.theevilroot.logically.common.mouse.selection.State;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 

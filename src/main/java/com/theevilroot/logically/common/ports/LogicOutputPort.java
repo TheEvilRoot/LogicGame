@@ -2,7 +2,7 @@ package com.theevilroot.logically.common.ports;
 
 import com.theevilroot.logically.common.Resources;
 import com.theevilroot.logically.common.elements.LogicElement;
-import com.theevilroot.logically.common.elements.LogicInputPanel;
+import com.theevilroot.logically.common.elements.control.LogicInputPanel;
 import com.theevilroot.logically.common.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseTrace;
 import javafx.scene.input.MouseEvent;

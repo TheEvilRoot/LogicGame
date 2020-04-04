@@ -3,15 +3,17 @@ package com.theevilroot.logically.gui;
 
 import com.theevilroot.logically.common.elements.LogicCircuit;
 import com.theevilroot.logically.common.elements.LogicElement;
-import com.theevilroot.logically.common.elements.LogicInputPanel;
-import com.theevilroot.logically.common.elements.LogicOutputPanel;
+import com.theevilroot.logically.common.elements.control.LogicInputPanel;
+import com.theevilroot.logically.common.elements.control.LogicOutputPanel;
 import com.theevilroot.logically.common.elements.base.LogicAndGate;
 import com.theevilroot.logically.common.elements.base.LogicNotGate;
 import com.theevilroot.logically.common.elements.base.LogicOrGate;
+import com.theevilroot.logically.common.gui.TextView;
 import com.theevilroot.logically.common.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseHandler;
 import com.theevilroot.logically.common.mouse.MouseTrace;
 import com.theevilroot.logically.common.ports.LogicPort;
+import com.theevilroot.logically.common.view.IView;
 import com.theevilroot.logically.common.view.drawers.IDrawer;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
 import com.theevilroot.logically.gui.drawable.impl.SimpleDrawablePane;
@@ -20,12 +22,16 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 
+import java.util.ArrayList;
+
 public class PlatformPane extends SimpleDrawablePane implements EventHandler<MouseEvent> {
 
     private final Canvas canvas;
 
     private LogicCircuit circuit;
     private IDrawerFactory drawerFactory;
+
+    private ArrayList<IView> views = new ArrayList<>();
 
     private Vector mouse = new Vector(Vector.UNIT);
 
@@ -74,6 +80,9 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
         circuit.addElement(input);
         circuit.addElement(output);
 
+        TextView textView = new TextView(200, 200, "TextView");
+        views.add(textView);
+
         drawingTimer.start();
     }
 
@@ -83,6 +92,14 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
         if (drawer != null)
             drawer.drawElement(drawerFactory, canvas.getGraphicsContext2D(), canvas, circuit);
         else throw new RuntimeException("circuit");
+
+        views.forEach(e -> {
+            IDrawer<IView> viewDrawer = (IDrawer<IView>) drawerFactory.getDrawerFor(e.getClass());
+            if (drawer != null) {
+               viewDrawer.drawElement(drawerFactory, canvas.getGraphicsContext2D(), canvas, e);
+            }
+        });
+
         if (shouldBeRedrawnLater)
             setDirty();
     }

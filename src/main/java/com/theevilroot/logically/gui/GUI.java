@@ -2,11 +2,9 @@ package com.theevilroot.logically.gui;
 
 import com.theevilroot.logically.common.elements.LogicCircuit;
 import com.theevilroot.logically.common.elements.LogicElement;
+import com.theevilroot.logically.common.gui.TextView;
 import com.theevilroot.logically.common.view.drawers.factory.impl.DrawerFactory;
-import com.theevilroot.logically.common.view.drawers.impl.LogicCircuitDrawer;
-import com.theevilroot.logically.common.view.drawers.impl.LogicElementDrawer;
-import com.theevilroot.logically.common.view.drawers.impl.LogicOutputPortDrawer;
-import com.theevilroot.logically.common.view.drawers.impl.LogicPortDrawer;
+import com.theevilroot.logically.common.view.drawers.impl.*;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.ports.LogicPort;
 import javafx.application.Application;
@@ -27,6 +25,7 @@ public class GUI extends Application {
         drawerFactory.addDrawer(LogicElement.class, new LogicElementDrawer());
         drawerFactory.addDrawer(LogicPort.class, new LogicPortDrawer());
         drawerFactory.addDrawer(LogicOutputPort.class, new LogicOutputPortDrawer());
+        drawerFactory.addDrawer(TextView.class, new TextViewDrawer());
         this.platformPane = new PlatformPane(drawerFactory);
         this.mainScene = new Scene(root);
 
