@@ -6,6 +6,7 @@ import com.theevilroot.logically.common.elements.LogicElement;
 import com.theevilroot.logically.common.elements.LogicInputPanel;
 import com.theevilroot.logically.common.elements.LogicOutputPanel;
 import com.theevilroot.logically.common.elements.base.LogicAndGate;
+import com.theevilroot.logically.common.elements.base.LogicMultiplexer;
 import com.theevilroot.logically.common.elements.base.LogicNotGate;
 import com.theevilroot.logically.common.elements.base.LogicOrGate;
 import com.theevilroot.logically.common.math.Vector;
@@ -50,27 +51,21 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
 
         getChildren().add(canvas);
 
-        LogicInputPanel input = new LogicInputPanel(-50f, 0, 4);
+        LogicInputPanel input = new LogicInputPanel(-50f, 0, 6);
         LogicOutputPanel output = new LogicOutputPanel(500f, 0f, 1);
 
-        LogicAndGate and = new LogicAndGate(20f, 20f, 3);
-        LogicOrGate or = new LogicOrGate(350f, 20f, 2);
-        LogicNotGate not = new LogicNotGate(200f, 20f);
+        LogicMultiplexer mux = new LogicMultiplexer(4);
 
-        and.connectPort(0, not, 0);
-        not.connectPort(0, or, 0);
+        input.connectPort(0, mux, 0);
+        input.connectPort(1, mux, 1);
+        input.connectPort(2, mux, 2);
+        input.connectPort(3, mux, 3);
+        input.connectPort(4, mux, 4);
+        input.connectPort(5, mux, 5);
 
-        input.connectPort(0, and, 0);
-        input.connectPort(1, and, 1);
-        input.connectPort(2, and, 2);
-        input.connectPort(3, or, 1);
+        mux.connectPort(0, output, 0);
 
-        or.connectPort(0, output, 0);
-
-
-        circuit.addElement(not);
-        circuit.addElement(and);
-        circuit.addElement(or);
+        circuit.addElement(mux);
         circuit.addElement(input);
         circuit.addElement(output);
 
