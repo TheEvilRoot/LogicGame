@@ -4,8 +4,10 @@ import com.theevilroot.logically.common.mouse.MouseHandler;
 import com.theevilroot.logically.common.mouse.MouseTrace;
 import com.theevilroot.logically.common.math.Vector;
 import com.theevilroot.logically.common.mouse.selection.State;
+import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.ports.LogicPort;
 import com.theevilroot.logically.common.view.impl.BaseView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,8 @@ public class LogicCircuit extends BaseView implements MouseHandler {
 
     private LogicElement selectedElement = null;
     private LogicElement hoverElement = null;
+
+    private LogicPort selectedPort = null;
 
     public LogicCircuit(double x, double y, double width, double height) {
         super(x, y, width, height);
@@ -103,12 +107,27 @@ public class LogicCircuit extends BaseView implements MouseHandler {
     }
 
     public void onElementPortClick(MouseEvent mouseEvent, Vector relMouse, LogicElement lastTrace, LogicPort acceptor) {
-
+        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+            acceptor.disconnectIfPresent();
+        } else {
+            if (selectedPort == null) {
+                selectedPort = acceptor;
+            } else {
+                if (selectedPort instanceof LogicOutputPort && !(acceptor instanceof LogicOutputPort)) {
+                    ((LogicOutputPort) selectedPort).connect(acceptor);
+                }
+                if (acceptor instanceof LogicOutputPort && !(selectedPort instanceof LogicOutputPort)) {
+                    ((LogicOutputPort) acceptor).connect(selectedPort);
+                }
+                selectedPort = null;
+            }
+        }
     }
 
     public boolean handleHover(Vector mouse) {
         if (hoverElement != null) {
-            hoverElement.setPosition(mouse.getX() - hoverElement.getSelectOffset().getX(), mouse.getY() - hoverElement.getSelectOffset().getY());
+            hoverElement.setPosition(mouse.getX() - hoverElement.getSelectOffset().getX(),
+                    mouse.getY() - hoverElement.getSelectOffset().getY());
             return true;
         }
         return false;

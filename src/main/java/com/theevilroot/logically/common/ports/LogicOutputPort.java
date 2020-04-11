@@ -24,12 +24,22 @@ public class LogicOutputPort extends LogicPort {
     }
 
     public LogicOutputPort connect(LogicPort port) {
-        this.connectedPorts.add(port);
+        if (!this.connectedPorts.contains(port) && !port.hasConnection()) {
+            this.connectedPorts.add(port);
+            port.haveConnected(this);
+            getParent().update();
+        }
         return this;
     }
 
     public LogicOutputPort connect(LogicPort ...ports) {
-        this.connectedPorts.addAll(Arrays.asList(ports));
+        for (LogicPort port : ports)
+            connect(port);
+        return this;
+    }
+
+    public LogicOutputPort disconnect(LogicPort port) {
+        connectedPorts.remove(port);
         return this;
     }
 
@@ -53,7 +63,6 @@ public class LogicOutputPort extends LogicPort {
         if (Math.abs(relPos.getMag()) < Resources.ELEMENT_PORT_RADIUS) {
             if (getParent() instanceof LogicInputPanel) {
                 triggerValue();
-                return true;
             }
             trace.finish(this);
             return true;

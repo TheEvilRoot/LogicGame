@@ -51,8 +51,8 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
 
         getChildren().add(canvas);
 
-        LogicInputPanel input = new LogicInputPanel(-50f, 0, 6);
-        LogicOutputPanel output = new LogicOutputPanel(500f, 0f, 1);
+        LogicInputPanel input = new LogicInputPanel(-50f, 0, 10);
+        LogicOutputPanel output = new LogicOutputPanel(500f, 0f, 2);
 
         LogicMultiplexer mux = new LogicMultiplexer(4);
 
@@ -65,9 +65,16 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
 
         mux.connectPort(0, output, 0);
 
+        LogicAndGate and = new LogicAndGate(100f, 100f, 2);
+        LogicOrGate or = new LogicOrGate(200f, 200f, 2);
+        LogicNotGate not = new LogicNotGate(100f, 100f);
+
         circuit.addElement(mux);
         circuit.addElement(input);
         circuit.addElement(output);
+        circuit.addElement(and);
+        circuit.addElement(or);
+        circuit.addElement(not);
 
         drawingTimer.start();
     }

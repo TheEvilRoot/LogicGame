@@ -14,6 +14,8 @@ import javafx.scene.input.MouseEvent;
 
 public class LogicPort extends BaseView implements MouseHandler {
 
+    private LogicOutputPort connection;
+
     private MutableObservable<Boolean> value = new ObservableValue<>(false);
     private LogicElement parent;
 
@@ -34,6 +36,22 @@ public class LogicPort extends BaseView implements MouseHandler {
 
     public LogicPort setValue(boolean value) {
         this.value.setValue(value);
+        return this;
+    }
+
+    public boolean hasConnection() {
+        return connection != null;
+    }
+
+    public LogicPort haveConnected(LogicOutputPort outputPort) {
+        connection = outputPort;
+        return this;
+    }
+
+    public LogicPort disconnectIfPresent() {
+        if (connection != null) {
+            connection.disconnect(this);
+        }
         return this;
     }
 

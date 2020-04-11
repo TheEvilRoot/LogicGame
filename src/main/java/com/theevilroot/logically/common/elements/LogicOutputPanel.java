@@ -23,6 +23,6 @@ public class LogicOutputPanel extends LogicElement {
 
     @Override
     public boolean canHaveState(State state) {
-        return !(state == State.HOVER);
+        return true;
     }
 }
