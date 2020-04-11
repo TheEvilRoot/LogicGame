@@ -1,6 +1,6 @@
 package com.theevilroot.logically.common.mouse.selection;
 
-import com.theevilroot.logically.common.mouse.selection.impl.Stateful;
+import com.theevilroot.logically.common.mouse.selection.impl.StatefulSelectableView;
 
 public enum State {
 
@@ -9,17 +9,17 @@ public enum State {
     NONE;
 
     public static State fromSelectable(IStateful selectable) {
-        if (selectable.is(Stateful.HOVER))
+        if (selectable.is(StatefulSelectableView.HOVER))
             return HOVER;
-        if (selectable.is(Stateful.SELECTED))
+        if (selectable.is(StatefulSelectableView.SELECTED))
             return SELECTED;
         return NONE;
     }
 
     public static State fromState(int state) {
-        if ((state & Stateful.HOVER) > 0)
+        if ((state & StatefulSelectableView.HOVER) > 0)
             return HOVER;
-        if ((state & Stateful.SELECTED) > 0) {
+        if ((state & StatefulSelectableView.SELECTED) > 0) {
             return SELECTED;
         }
         return NONE;

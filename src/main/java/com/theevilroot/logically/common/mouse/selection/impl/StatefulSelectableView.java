@@ -4,7 +4,7 @@ import com.theevilroot.logically.common.math.Vector;
 import com.theevilroot.logically.common.mouse.selection.IStateful;
 import com.theevilroot.logically.common.mouse.selection.State;
 
-public class Stateful implements IStateful {
+public class StatefulSelectableView implements IStateful {
 
     public static final int SELECTED = 1;
     public static final int HOVER = 2;

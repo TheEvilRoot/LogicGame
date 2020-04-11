@@ -5,6 +5,6 @@ import com.theevilroot.logically.common.view.drawers.IDrawer;
 
 public interface IDrawerFactory {
 
-    <V extends IView> IDrawer<? super V> getDrawerFor(Class<? super V> viewClass);
+    <V extends IView> IDrawer<? super V> getDrawerFor(Class<? extends V> viewClass);
 
 }

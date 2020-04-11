@@ -1,7 +1,7 @@
 package com.theevilroot.logically.common.view.drawers.impl;
 
 import com.theevilroot.logically.common.math.Vector;
-import com.theevilroot.logically.common.mouse.selection.impl.Stateful;
+import com.theevilroot.logically.common.mouse.selection.impl.StatefulSelectableView;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
 import com.theevilroot.logically.common.Resources;
@@ -9,7 +9,6 @@ import com.theevilroot.logically.common.view.drawers.IDrawer;
 import com.theevilroot.logically.common.ports.LogicPort;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
 
 public class LogicPortDrawer implements IDrawer<LogicPort> {
     @Override
@@ -20,7 +19,7 @@ public class LogicPortDrawer implements IDrawer<LogicPort> {
         gc.setFill(view.getValue() ? Resources.PORT_ACTIVE_COLOR : Resources.PORT_INACTIVE_COLOR);
         gc.fillOval(view.getPosition().getX() + Resources.ELEMENT_PORT_RADIUS - 4, view.getPosition().getY() - 4, 8, 8);
 
-        if (view.is(Stateful.SELECTED)) {
+        if (view.is(StatefulSelectableView.SELECTED)) {
             gc.setLineWidth(2f);
             gc.setStroke(view.getValue() ? Resources.PORT_ACTIVE_COLOR : Resources.PORT_INACTIVE_COLOR);
             gc.strokeOval(view.getPosition().getX() - 5,

@@ -16,13 +16,13 @@ public class DrawerFactory implements IDrawerFactory {
     }
 
     @Override
-    public <V extends IView> IDrawer<? super V> getDrawerFor(Class<? super V> viewClass) {
+    public <V extends IView> IDrawer<? super V> getDrawerFor(Class<? extends V> viewClass) {
         if (viewClass == IView.class)
             return null;
         if (drawerMap.containsKey(viewClass)) {
             return (IDrawer<? super V>) drawerMap.get(viewClass);
         } else {
-            return getDrawerFor(viewClass.getSuperclass());
+            return getDrawerFor((Class<? extends V>) viewClass.getSuperclass());
         }
     }
 }

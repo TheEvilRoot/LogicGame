@@ -59,7 +59,7 @@ public class LogicElementDrawer implements IDrawer<LogicElement> {
         gc.restore();
         gc.save(); // Coo-rds on circuit
 
-        IDrawer<LogicPort> portsDrawer = (IDrawer<LogicPort>) factory.getDrawerFor(LogicPort.class);
+        IDrawer<? super LogicPort> portsDrawer = factory.getDrawerFor(LogicPort.class);
         if (portsDrawer != null) {
             view.getInputPorts().forEach(p -> {
                 gc.save();
@@ -68,7 +68,7 @@ public class LogicElementDrawer implements IDrawer<LogicElement> {
             });
         } else throw new RuntimeException("port");
 
-        IDrawer<LogicPort> outPortDrawer = (IDrawer<LogicPort>) factory.getDrawerFor(LogicOutputPort.class);
+        IDrawer<? super LogicOutputPort> outPortDrawer = factory.getDrawerFor(LogicOutputPort.class);
         if (outPortDrawer != null) {
             view.getOutputPorts().forEach(p -> {
                 gc.save();
