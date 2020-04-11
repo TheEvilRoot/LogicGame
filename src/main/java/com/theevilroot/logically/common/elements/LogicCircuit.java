@@ -4,6 +4,7 @@ import com.theevilroot.logically.common.mouse.MouseHandler;
 import com.theevilroot.logically.common.mouse.MouseTrace;
 import com.theevilroot.logically.common.math.Vector;
 import com.theevilroot.logically.common.mouse.selection.State;
+import com.theevilroot.logically.common.mouse.selection.impl.Stateful;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.ports.LogicPort;
 import com.theevilroot.logically.common.view.impl.BaseView;
@@ -112,6 +113,7 @@ public class LogicCircuit extends BaseView implements MouseHandler {
         } else {
             if (selectedPort == null) {
                 selectedPort = acceptor;
+                selectedPort.set(Stateful.SELECTED);
             } else {
                 if (selectedPort instanceof LogicOutputPort && !(acceptor instanceof LogicOutputPort)) {
                     ((LogicOutputPort) selectedPort).connect(acceptor);
@@ -119,6 +121,7 @@ public class LogicCircuit extends BaseView implements MouseHandler {
                 if (acceptor instanceof LogicOutputPort && !(selectedPort instanceof LogicOutputPort)) {
                     ((LogicOutputPort) acceptor).connect(selectedPort);
                 }
+                selectedPort.unset(Stateful.SELECTED);
                 selectedPort = null;
             }
         }

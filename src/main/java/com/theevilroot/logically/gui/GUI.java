@@ -5,7 +5,6 @@ import com.theevilroot.logically.common.elements.LogicElement;
 import com.theevilroot.logically.common.view.drawers.factory.impl.DrawerFactory;
 import com.theevilroot.logically.common.view.drawers.impl.LogicCircuitDrawer;
 import com.theevilroot.logically.common.view.drawers.impl.LogicElementDrawer;
-import com.theevilroot.logically.common.view.drawers.impl.LogicOutputPortDrawer;
 import com.theevilroot.logically.common.view.drawers.impl.LogicPortDrawer;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.ports.LogicPort;
@@ -26,7 +25,6 @@ public class GUI extends Application {
         drawerFactory.addDrawer(LogicCircuit.class, new LogicCircuitDrawer());
         drawerFactory.addDrawer(LogicElement.class, new LogicElementDrawer());
         drawerFactory.addDrawer(LogicPort.class, new LogicPortDrawer());
-        drawerFactory.addDrawer(LogicOutputPort.class, new LogicOutputPortDrawer());
         this.platformPane = new PlatformPane(drawerFactory);
         this.mainScene = new Scene(root);
 
