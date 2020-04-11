@@ -1,13 +1,10 @@
-package com.theevilroot.logically.common.mouse.selection.impl;
+package com.theevilroot.logically.common.mouse.states.impl;
 
 import com.theevilroot.logically.common.math.Vector;
-import com.theevilroot.logically.common.mouse.selection.IStateful;
-import com.theevilroot.logically.common.mouse.selection.State;
+import com.theevilroot.logically.common.mouse.states.IStateful;
+import com.theevilroot.logically.common.mouse.states.State;
 
 public class StatefulSelectableView implements IStateful {
-
-    public static final int SELECTED = 1;
-    public static final int HOVER = 2;
 
     private int state = 0;
     private Vector selectOffset = new Vector(Vector.UNIT);

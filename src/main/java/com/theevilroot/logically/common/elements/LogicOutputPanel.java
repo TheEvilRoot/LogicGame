@@ -1,6 +1,6 @@
 package com.theevilroot.logically.common.elements;
 
-import com.theevilroot.logically.common.mouse.selection.State;
+import com.theevilroot.logically.common.mouse.states.State;
 
 public class LogicOutputPanel extends LogicElement {
 

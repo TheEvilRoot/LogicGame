@@ -1,4 +1,4 @@
-package com.theevilroot.logically.common.mouse.selection;
+package com.theevilroot.logically.common.mouse.states;
 
 public interface IStateful {
 
@@ -11,5 +11,9 @@ public interface IStateful {
     void unset(int mask);
 
     State getState();
+
+    int SELECTED = 1;
+    int HOVER = 2;
+    int DIRTY = 3;
 
 }

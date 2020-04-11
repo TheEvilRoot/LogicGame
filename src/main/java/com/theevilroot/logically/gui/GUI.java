@@ -8,6 +8,8 @@ import com.theevilroot.logically.common.view.drawers.impl.LogicElementDrawer;
 import com.theevilroot.logically.common.view.drawers.impl.LogicPortDrawer;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.ports.LogicPort;
+import com.theevilroot.logically.common.view.drawers.impl.UITextViewDrawer;
+import com.theevilroot.logically.common.view.ui.UITextView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -25,6 +27,9 @@ public class GUI extends Application {
         drawerFactory.addDrawer(LogicCircuit.class, new LogicCircuitDrawer());
         drawerFactory.addDrawer(LogicElement.class, new LogicElementDrawer());
         drawerFactory.addDrawer(LogicPort.class, new LogicPortDrawer());
+
+        drawerFactory.addDrawer(UITextView.class, new UITextViewDrawer());
+
         this.platformPane = new PlatformPane(drawerFactory);
         this.mainScene = new Scene(root);
 

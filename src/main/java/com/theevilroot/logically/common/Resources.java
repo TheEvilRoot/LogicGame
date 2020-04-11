@@ -1,6 +1,6 @@
 package com.theevilroot.logically.common;
 
-import com.theevilroot.logically.common.mouse.selection.State;
+import com.theevilroot.logically.common.mouse.states.State;
 import javafx.scene.paint.Paint;
 
 public class Resources {

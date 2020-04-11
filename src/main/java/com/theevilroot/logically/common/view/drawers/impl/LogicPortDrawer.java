@@ -1,7 +1,7 @@
 package com.theevilroot.logically.common.view.drawers.impl;
 
 import com.theevilroot.logically.common.math.Vector;
-import com.theevilroot.logically.common.mouse.selection.impl.StatefulSelectableView;
+import com.theevilroot.logically.common.mouse.states.impl.StatefulSelectableView;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
 import com.theevilroot.logically.common.Resources;

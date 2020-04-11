@@ -1,7 +1,7 @@
 package com.theevilroot.logically.common.view.impl;
 
 import com.theevilroot.logically.common.math.Vector;
-import com.theevilroot.logically.common.mouse.selection.impl.StatefulSelectableView;
+import com.theevilroot.logically.common.mouse.states.impl.StatefulSelectableView;
 import com.theevilroot.logically.common.view.IView;
 
 public class BaseView extends StatefulSelectableView implements IView {

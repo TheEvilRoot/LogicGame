@@ -3,8 +3,8 @@ package com.theevilroot.logically.common.elements;
 import com.theevilroot.logically.common.mouse.MouseHandler;
 import com.theevilroot.logically.common.mouse.MouseTrace;
 import com.theevilroot.logically.common.math.Vector;
-import com.theevilroot.logically.common.mouse.selection.State;
-import com.theevilroot.logically.common.mouse.selection.impl.StatefulSelectableView;
+import com.theevilroot.logically.common.mouse.states.State;
+import com.theevilroot.logically.common.mouse.states.impl.StatefulSelectableView;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.ports.LogicPort;
 import com.theevilroot.logically.common.view.impl.BaseView;
@@ -127,12 +127,11 @@ public class LogicCircuit extends BaseView implements MouseHandler {
         }
     }
 
-    public boolean handleHover(Vector mouse) {
+    public void handleHover(Vector mouse) {
         if (hoverElement != null) {
             hoverElement.setPosition(mouse.getX() - hoverElement.getSelectOffset().getX(),
                     mouse.getY() - hoverElement.getSelectOffset().getY());
-            return true;
+            set(DIRTY);
         }
-        return false;
     }
 }

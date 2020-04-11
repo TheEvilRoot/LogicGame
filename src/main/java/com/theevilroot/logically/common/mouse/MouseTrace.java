@@ -26,4 +26,9 @@ public class MouseTrace {
         return trace;
     }
 
+    public void reset() {
+        this.trace.clear();
+        this.acceptor = null;
+    }
+
 }

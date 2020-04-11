@@ -12,14 +12,22 @@ import com.theevilroot.logically.common.elements.base.LogicOrGate;
 import com.theevilroot.logically.common.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseHandler;
 import com.theevilroot.logically.common.mouse.MouseTrace;
+import com.theevilroot.logically.common.mouse.states.IStateful;
 import com.theevilroot.logically.common.ports.LogicPort;
+import com.theevilroot.logically.common.view.IView;
 import com.theevilroot.logically.common.view.drawers.IDrawer;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
+import com.theevilroot.logically.common.view.impl.BaseView;
+import com.theevilroot.logically.common.view.ui.UIButton;
+import com.theevilroot.logically.common.view.ui.UITextView;
+import com.theevilroot.logically.common.view.ui.UIView;
 import com.theevilroot.logically.gui.drawable.impl.SimpleDrawablePane;
 import javafx.beans.InvalidationListener;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
+
+import java.util.ArrayList;
 
 public class PlatformPane extends SimpleDrawablePane implements EventHandler<MouseEvent> {
 
@@ -27,6 +35,8 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
 
     private LogicCircuit circuit;
     private IDrawerFactory drawerFactory;
+
+    private ArrayList<UIView> uiViews = new ArrayList<>();
 
     private Vector mouse = new Vector(Vector.UNIT);
 
@@ -76,29 +86,64 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
         circuit.addElement(or);
         circuit.addElement(not);
 
+        UITextView textView = new UITextView(100f, 100f, "Hello World", 24f);
+        UIButton button = new UIButton(150f, 150f, "Click me");
+        button.setClickListener((event, sender) -> {
+            System.out.println("CLiiick");
+        });
+
+        uiViews.add(textView);
+        uiViews.add(button);
+
         drawingTimer.start();
     }
 
-    public void draw() {
-        boolean shouldBeRedrawnLater = circuit.handleHover(mouse);
-        IDrawer<LogicCircuit> drawer = (IDrawer<LogicCircuit>) drawerFactory.getDrawerFor(circuit.getClass());
+    private void drawCircuit() {
+        circuit.handleHover(mouse);
+        IDrawer<? super LogicCircuit> drawer = drawerFactory.getDrawerFor(circuit.getClass());
         if (drawer != null)
             drawer.drawElement(drawerFactory, canvas.getGraphicsContext2D(), canvas, circuit);
         else throw new RuntimeException("circuit");
-        if (shouldBeRedrawnLater)
+    }
+
+    private void drawUi() {
+        uiViews.forEach(ui -> {
+            IDrawer<? super IView> uiDrawer = drawerFactory.getDrawerFor(ui.getClass());
+            if (uiDrawer != null) {
+                uiDrawer.drawElement(drawerFactory, canvas.getGraphicsContext2D(), canvas, ui);
+            } else throw new RuntimeException(ui.getClass().getSimpleName());
+        });
+    }
+
+    public void draw() {
+        drawCircuit();
+        drawUi();
+        if (circuit.is(IStateful.DIRTY) || uiViews.stream().anyMatch(e -> e.is(IStateful.DIRTY)))
             setDirty();
     }
 
     @Override
     public void resetDirty() {
         super.resetDirty();
+        circuit.unset(IStateful.DIRTY);
+        uiViews.forEach(e -> e.unset(IStateful.DIRTY));
     }
 
     @Override
     public void handle(MouseEvent mouseEvent) {
         Vector absMouse = new Vector(mouseEvent.getX(), mouseEvent.getY());
-        Vector relMouse = Vector.minus(absMouse, circuit.getPosition());
         MouseTrace trace = new MouseTrace();
+
+        for (UIView uiView : uiViews) {
+            Vector relMouse = Vector.minus(absMouse, uiView.getPosition());
+            if (uiView.handle(mouseEvent, relMouse, trace)) {
+                setDirty();
+                return;
+            }
+            trace.reset();
+        }
+
+        Vector relMouse = Vector.minus(absMouse, circuit.getPosition());
         circuit.handle(mouseEvent, relMouse, trace);
         if (trace.getAcceptor() != null) {
             MouseHandler acceptor = trace.getAcceptor();
@@ -112,7 +157,6 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
                     circuit.onElementPortClick(mouseEvent, relMouse, (LogicElement) lastTrace, (LogicPort) acceptor);
             }
         }
-
         setDirty();
     }
 }
