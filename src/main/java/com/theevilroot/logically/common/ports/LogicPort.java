@@ -48,6 +48,12 @@ public class LogicPort extends BaseView implements MouseHandler {
         return this;
     }
 
+    public LogicPort haveDisconnected() {
+        connection = null;
+        setValue(false);
+        return this;
+    }
+
     public LogicPort disconnectIfPresent() {
         if (connection != null) {
             connection.disconnect(this);

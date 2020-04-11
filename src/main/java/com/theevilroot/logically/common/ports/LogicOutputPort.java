@@ -40,6 +40,7 @@ public class LogicOutputPort extends LogicPort {
 
     public LogicOutputPort disconnect(LogicPort port) {
         connectedPorts.remove(port);
+        port.haveDisconnected();
         return this;
     }
 
@@ -55,7 +56,11 @@ public class LogicOutputPort extends LogicPort {
     }
 
     public void updateConnections() {
-        connectedPorts.forEach((connection) -> connection.setValue(this.getValue()));
+        connectedPorts.forEach((connection) -> {
+            if (connection.getValue() != getValue()) {
+                connection.setValue(this.getValue());
+            }
+        });
     }
 
     @Override
