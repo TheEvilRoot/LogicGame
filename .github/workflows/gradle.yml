@@ -26,3 +26,5 @@ jobs:
       run: ./gradlew build
     - name: Run Gradle Tests
       run: ./gradlew test
+    - name: Get Java version
+      run: java --version
