@@ -1,4 +1,4 @@
-package com.theevilroot.logically.common.math;
+package com.theevilroot.logically.core.math;
 
 public class Vector {
 

@@ -1,14 +1,13 @@
 package com.theevilroot.logically.common.ports;
 
-import com.theevilroot.logically.common.Resources;
+import com.theevilroot.logically.core.Resources;
 import com.theevilroot.logically.common.elements.LogicElement;
-import com.theevilroot.logically.common.elements.LogicInputPanel;
-import com.theevilroot.logically.common.math.Vector;
+import com.theevilroot.logically.core.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseHandler;
 import com.theevilroot.logically.common.mouse.MouseTrace;
-import com.theevilroot.logically.common.observe.MutableObservable;
-import com.theevilroot.logically.common.observe.Observable;
-import com.theevilroot.logically.common.observe.impl.ObservableValue;
+import com.theevilroot.logically.core.observable.MutableObservable;
+import com.theevilroot.logically.core.observable.Observable;
+import com.theevilroot.logically.core.observable.impl.ObservableValue;
 import com.theevilroot.logically.common.view.impl.BaseView;
 import javafx.scene.input.MouseEvent;
 

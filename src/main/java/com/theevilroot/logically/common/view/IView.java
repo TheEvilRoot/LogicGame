@@ -1,6 +1,6 @@
 package com.theevilroot.logically.common.view;
 
-import com.theevilroot.logically.common.math.Vector;
+import com.theevilroot.logically.core.math.Vector;
 
 public interface IView {
 

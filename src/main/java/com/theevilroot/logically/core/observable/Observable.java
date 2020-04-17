@@ -1,4 +1,4 @@
-package com.theevilroot.logically.common.observe;
+package com.theevilroot.logically.core.observable;
 
 public interface Observable<T> {
 

@@ -1,4 +1,4 @@
-package com.theevilroot.logically.common;
+package com.theevilroot.logically.core;
 
 import com.theevilroot.logically.common.mouse.states.IStateful;
 import javafx.scene.paint.Paint;

@@ -3,7 +3,7 @@ package com.theevilroot.logically.common.view.drawers.impl;
 import com.theevilroot.logically.common.elements.LogicCircuit;
 import com.theevilroot.logically.common.elements.LogicElement;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
-import com.theevilroot.logically.common.Resources;
+import com.theevilroot.logically.core.Resources;
 import com.theevilroot.logically.common.view.drawers.IDrawer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

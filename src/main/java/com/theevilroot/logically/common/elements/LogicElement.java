@@ -1,10 +1,10 @@
 package com.theevilroot.logically.common.elements;
 
-import com.theevilroot.logically.common.Resources;
-import com.theevilroot.logically.common.math.Vector;
+import com.theevilroot.logically.core.Resources;
+import com.theevilroot.logically.core.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseHandler;
 import com.theevilroot.logically.common.mouse.MouseTrace;
-import com.theevilroot.logically.common.observe.Observer;
+import com.theevilroot.logically.core.observable.Observer;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.ports.LogicPort;
 import com.theevilroot.logically.common.view.impl.BaseView;

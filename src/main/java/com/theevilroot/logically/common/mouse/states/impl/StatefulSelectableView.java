@@ -1,6 +1,6 @@
 package com.theevilroot.logically.common.mouse.states.impl;
 
-import com.theevilroot.logically.common.math.Vector;
+import com.theevilroot.logically.core.math.Vector;
 import com.theevilroot.logically.common.mouse.states.IStateful;
 
 public class StatefulSelectableView implements IStateful {

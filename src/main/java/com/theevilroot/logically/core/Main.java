@@ -1,4 +1,4 @@
-package com.theevilroot.logically.main;
+package com.theevilroot.logically.core;
 
 import com.theevilroot.logically.gui.GUI;
 import javafx.application.Application;

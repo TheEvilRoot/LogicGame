@@ -2,7 +2,7 @@ package com.theevilroot.logically.common.elements;
 
 import com.theevilroot.logically.common.mouse.MouseHandler;
 import com.theevilroot.logically.common.mouse.MouseTrace;
-import com.theevilroot.logically.common.math.Vector;
+import com.theevilroot.logically.core.math.Vector;
 import com.theevilroot.logically.common.mouse.states.IStateful;
 import com.theevilroot.logically.common.mouse.states.impl.StatefulSelectableView;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
