@@ -16,7 +16,7 @@ public interface IStateful {
 
     int SELECTED = 1;
     int HOVER = 2;
-    int DIRTY = 3;
-    int INPUT_CHANGEABLE = 4;
+    int DIRTY = 4;
+    int INPUT_CHANGEABLE = 8;
 
 }

@@ -2,6 +2,7 @@ package com.theevilroot.logically.gui.platform;
 
 import com.theevilroot.logically.common.elements.LogicElement;
 import com.theevilroot.logically.common.elements.LogicInputPanel;
+import com.theevilroot.logically.common.mouse.states.IStateful;
 import com.theevilroot.logically.core.functions.base.And;
 import com.theevilroot.logically.core.functions.base.Not;
 import com.theevilroot.logically.core.functions.base.Or;
@@ -37,7 +38,10 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
 
         initCanvas();
 
-        addElement(new LogicInputPanel(-50f, 0f, 4));
+        LogicInputPanel input = new LogicInputPanel(-50f, 0f, 4);
+        input.set(IStateful.INPUT_CHANGEABLE);
+
+        addElement(input);
         addElement(new LogicElement(-50f, 0f, new And(2)));
         addElement(new LogicElement(-50f, 0f, new Not(1)));
         addElement(new LogicElement(-50f, 0f, new Or(2)));
