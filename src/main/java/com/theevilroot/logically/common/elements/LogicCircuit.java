@@ -3,7 +3,7 @@ package com.theevilroot.logically.common.elements;
 import com.theevilroot.logically.common.mouse.MouseHandler;
 import com.theevilroot.logically.common.mouse.MouseTrace;
 import com.theevilroot.logically.common.math.Vector;
-import com.theevilroot.logically.common.mouse.states.State;
+import com.theevilroot.logically.common.mouse.states.IStateful;
 import com.theevilroot.logically.common.mouse.states.impl.StatefulSelectableView;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 import com.theevilroot.logically.common.ports.LogicPort;
@@ -15,11 +15,10 @@ import java.util.List;
 
 public class LogicCircuit extends BaseView implements MouseHandler {
 
-    private ArrayList<LogicElement> elements = new ArrayList<>();
+    private final ArrayList<LogicElement> elements = new ArrayList<>();
 
     private LogicElement selectedElement = null;
     private LogicElement hoverElement = null;
-
     private LogicPort selectedPort = null;
 
     public LogicCircuit(double x, double y, double width, double height) {
@@ -59,7 +58,7 @@ public class LogicCircuit extends BaseView implements MouseHandler {
     }
 
     private void setSelectedElement(LogicElement e, Vector offset) {
-        if (e == null || e.canHaveState(State.SELECTED)) {
+        if (e == null || e.can(IStateful.SELECTED)) {
             selectedElement = e;
             elements.forEach(f -> {
                 if (f.is(SELECTED))
@@ -73,7 +72,7 @@ public class LogicCircuit extends BaseView implements MouseHandler {
     }
 
     private void setHoverElement(LogicElement e, Vector offset) {
-        if (e == null || e.canHaveState(State.HOVER)) {
+        if (e == null || e.can(IStateful.SELECTED)) {
             hoverElement = e;
             elements.forEach(f -> {
                 if (f.is(HOVER))

@@ -85,10 +85,9 @@ public abstract class LogicElement extends BaseView implements Observer<Boolean>
         return outputPorts;
     }
 
-    public LogicElement connectPort(int outputIndex, LogicElement element, int inputIndex) {
+    public void connectPort(int outputIndex, LogicElement element, int inputIndex) {
         this.outputPorts.get(outputIndex).connect(element.inputPorts.get(inputIndex));
         update();
-        return this;
     }
 
     public void update() {

@@ -5,10 +5,6 @@ import com.theevilroot.logically.common.elements.LogicCircuit;
 import com.theevilroot.logically.common.elements.LogicElement;
 import com.theevilroot.logically.common.elements.LogicInputPanel;
 import com.theevilroot.logically.common.elements.LogicOutputPanel;
-import com.theevilroot.logically.common.elements.base.LogicAndGate;
-import com.theevilroot.logically.common.elements.base.LogicMultiplexer;
-import com.theevilroot.logically.common.elements.base.LogicNotGate;
-import com.theevilroot.logically.common.elements.base.LogicOrGate;
 import com.theevilroot.logically.common.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseHandler;
 import com.theevilroot.logically.common.mouse.MouseTrace;
@@ -17,7 +13,6 @@ import com.theevilroot.logically.common.ports.LogicPort;
 import com.theevilroot.logically.common.view.IView;
 import com.theevilroot.logically.common.view.drawers.IDrawer;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
-import com.theevilroot.logically.common.view.impl.BaseView;
 import com.theevilroot.logically.common.view.ui.UIButton;
 import com.theevilroot.logically.common.view.ui.UITextView;
 import com.theevilroot.logically.common.view.ui.UIView;
@@ -33,12 +28,12 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
 
     private final Canvas canvas;
 
-    private LogicCircuit circuit;
-    private IDrawerFactory drawerFactory;
+    private final LogicCircuit circuit;
+    private final IDrawerFactory drawerFactory;
 
-    private ArrayList<UIView> uiViews = new ArrayList<>();
+    private final ArrayList<UIView> uiViews = new ArrayList<>();
 
-    private Vector mouse = new Vector(Vector.UNIT);
+    private final Vector mouse = new Vector(Vector.UNIT);
 
     public PlatformPane(IDrawerFactory drawerFactory) {
         this.circuit = new LogicCircuit(0, 0, 600, 900);
@@ -62,38 +57,13 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
         getChildren().add(canvas);
 
         LogicInputPanel input = new LogicInputPanel(-50f, 0, 10);
+        input.deny(IStateful.SELECTED | IStateful.HOVER);
+        input.set(IStateful.INPUT_CHANGEABLE);
+
         LogicOutputPanel output = new LogicOutputPanel(500f, 0f, 2);
 
-        LogicMultiplexer mux = new LogicMultiplexer(4);
-
-        input.connectPort(0, mux, 0);
-        input.connectPort(1, mux, 1);
-        input.connectPort(2, mux, 2);
-        input.connectPort(3, mux, 3);
-        input.connectPort(4, mux, 4);
-        input.connectPort(5, mux, 5);
-
-        mux.connectPort(0, output, 0);
-
-        LogicAndGate and = new LogicAndGate(100f, 100f, 2);
-        LogicOrGate or = new LogicOrGate(200f, 200f, 2);
-        LogicNotGate not = new LogicNotGate(100f, 100f);
-
-        circuit.addElement(mux);
         circuit.addElement(input);
         circuit.addElement(output);
-        circuit.addElement(and);
-        circuit.addElement(or);
-        circuit.addElement(not);
-
-        UITextView textView = new UITextView(100f, 100f, "Hello World", 24f);
-        UIButton button = new UIButton(150f, 150f, "Click me");
-        button.setClickListener((event, sender) -> {
-            System.out.println("CLiiick");
-        });
-
-        uiViews.add(textView);
-        uiViews.add(button);
 
         drawingTimer.start();
     }

@@ -1,6 +1,6 @@
 package com.theevilroot.logically.common;
 
-import com.theevilroot.logically.common.mouse.states.State;
+import com.theevilroot.logically.common.mouse.states.IStateful;
 import javafx.scene.paint.Paint;
 
 public class Resources {
@@ -47,36 +47,27 @@ public class Resources {
 
     public static final Double ELEMENT_SELECTION_BOX_WIDTH = 2d;
 
-    public static Paint getElementBackgroundColor(State state) {
-        switch (state) {
-            case SELECTED:
-                return SELECTED_ELEMENT_BACKGROUND_COLOR;
-            case HOVER:
-                return HOVER_ELEMENT_BACKGROUND_COLOR;
-            default:
-                return ELEMENT_BACKGROUND_COLOR;
-        }
+    public static Paint getElementBackgroundColor(IStateful state) {
+        if (state.is(IStateful.SELECTED))
+            return SELECTED_ELEMENT_BACKGROUND_COLOR;
+        if (state.is(IStateful.HOVER))
+            return HOVER_ELEMENT_BACKGROUND_COLOR;
+        return ELEMENT_BACKGROUND_COLOR;
     }
 
-    public static Paint getElementStrokeColor(State state) {
-        switch (state) {
-            case SELECTED:
-                return SELECTED_ELEMENT_STROKE_COLOR;
-            case HOVER:
-                return HOVER_ELEMENT_STROKE_COLOR;
-            default:
-                return ELEMENT_STROKE_COLOR;
-        }
+    public static Paint getElementStrokeColor(IStateful state) {
+        if (state.is(IStateful.SELECTED))
+            return SELECTED_ELEMENT_STROKE_COLOR;
+        if (state.is(IStateful.HOVER))
+            return HOVER_ELEMENT_STROKE_COLOR;
+        return ELEMENT_STROKE_COLOR;
     }
 
-    public static Double getElementStrokeWidth(State state) {
-        switch (state) {
-            case SELECTED:
-                return SELECTED_ELEMENT_STROKE_WIDTH;
-            case HOVER:
-                return HOVER_ELEMENT_STROKE_WIDTH;
-            default:
-                return ELEMENT_STROKE_WIDTH;
-        }
+    public static Double getElementStrokeWidth(IStateful state) {
+        if (state.is(IStateful.SELECTED))
+            return SELECTED_ELEMENT_STROKE_WIDTH;
+        if (state.is(IStateful.HOVER))
+            return HOVER_ELEMENT_STROKE_WIDTH;
+        return ELEMENT_STROKE_WIDTH;
     }
 }

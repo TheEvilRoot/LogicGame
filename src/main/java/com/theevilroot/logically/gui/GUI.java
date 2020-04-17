@@ -12,6 +12,7 @@ import com.theevilroot.logically.common.view.drawers.impl.UITextViewDrawer;
 import com.theevilroot.logically.common.view.ui.UITextView;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -20,6 +21,8 @@ public class GUI extends Application {
     private final PlatformPane platformPane;
     private final VBox root;
     private final Scene mainScene;
+
+    private final Button addButton;
 
     public GUI() {
         this.root = new VBox();
@@ -32,6 +35,10 @@ public class GUI extends Application {
 
         this.platformPane = new PlatformPane(drawerFactory);
         this.mainScene = new Scene(root);
+
+        this.addButton = new Button("Add");
+        this.addButton.setOnMouseClicked(e -> {
+        });
 
         this.root.getChildren().add(platformPane);
 

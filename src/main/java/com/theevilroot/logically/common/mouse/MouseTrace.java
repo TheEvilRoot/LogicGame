@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MouseTrace {
 
-    private List<MouseHandler> trace = new ArrayList<>();
+    private final List<MouseHandler> trace = new ArrayList<>();
     private MouseHandler acceptor = null;
 
     public MouseTrace() { }

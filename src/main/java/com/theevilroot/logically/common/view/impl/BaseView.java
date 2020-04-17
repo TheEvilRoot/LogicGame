@@ -6,8 +6,8 @@ import com.theevilroot.logically.common.view.IView;
 
 public class BaseView extends StatefulSelectableView implements IView {
 
-    private Vector position = new Vector(Vector.UNIT);
-    private Vector size = new Vector(Vector.UNIT);
+    private final Vector position = new Vector(Vector.UNIT);
+    private final Vector size = new Vector(Vector.UNIT);
 
     public BaseView(double x, double y) {
         setPosition(x, y);

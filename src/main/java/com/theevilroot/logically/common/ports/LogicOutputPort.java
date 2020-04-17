@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LogicOutputPort extends LogicPort {
 
-    private ArrayList<LogicPort> connectedPorts = new ArrayList<>();
+    private final ArrayList<LogicPort> connectedPorts = new ArrayList<>();
 
     public LogicOutputPort(LogicElement parent, double x, double y) {
         super(parent, x, y);
@@ -23,32 +23,28 @@ public class LogicOutputPort extends LogicPort {
         super(parent);
     }
 
-    public LogicOutputPort connect(LogicPort port) {
+    public void connect(LogicPort port) {
         if (!this.connectedPorts.contains(port) && !port.hasConnection()) {
             this.connectedPorts.add(port);
             port.haveConnected(this);
             getParent().update();
         }
-        return this;
     }
 
-    public LogicOutputPort connect(LogicPort ...ports) {
+    public void connect(LogicPort ...ports) {
         for (LogicPort port : ports)
             connect(port);
-        return this;
     }
 
-    public LogicOutputPort disconnect(LogicPort port) {
+    public void disconnect(LogicPort port) {
         connectedPorts.remove(port);
         port.haveDisconnected();
-        return this;
     }
 
     @Override
-    public LogicPort setValue(boolean value) {
+    public void setValue(boolean value) {
         super.setValue(value);
         updateConnections();
-        return this;
     }
 
     public List<LogicPort> getConnections() {
@@ -66,7 +62,7 @@ public class LogicOutputPort extends LogicPort {
     @Override
     public boolean handle(MouseEvent event, Vector relPos, MouseTrace trace) {
         if (Math.abs(relPos.getMag()) < Resources.ELEMENT_PORT_RADIUS) {
-            if (getParent() instanceof LogicInputPanel) {
+            if (getParent() instanceof LogicInputPanel && getParent().is(INPUT_CHANGEABLE)) {
                 triggerValue();
             }
             trace.finish(this);

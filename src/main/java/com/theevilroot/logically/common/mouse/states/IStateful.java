@@ -2,18 +2,21 @@ package com.theevilroot.logically.common.mouse.states;
 
 public interface IStateful {
 
-    boolean canHaveState(State state);
-
     boolean is(int mask);
 
     void set(int mask);
 
     void unset(int mask);
 
-    State getState();
+    boolean can(int mm);
+
+    void allow(int mm);
+
+    void deny(int mm);
 
     int SELECTED = 1;
     int HOVER = 2;
     int DIRTY = 3;
+    int INPUT_CHANGEABLE = 4;
 
 }

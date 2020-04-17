@@ -1,7 +1,7 @@
 package com.theevilroot.logically.common.view.drawers.impl;
 
 import com.theevilroot.logically.common.elements.LogicElement;
-import com.theevilroot.logically.common.mouse.states.State;
+import com.theevilroot.logically.common.mouse.states.IStateful;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
 import com.theevilroot.logically.common.Resources;
 import com.theevilroot.logically.common.view.drawers.IDrawer;
@@ -24,7 +24,7 @@ public class LogicElementDrawer implements IDrawer<LogicElement> {
         // Translate info start of box
         gc.translate(view.getPosition().getX(), view.getPosition().getY());
 
-        if (view.getState() == State.SELECTED) {
+        if (view.is(IStateful.SELECTED)) {
             gc.setStroke(Resources.ELEMENT_SELECTION_BOX_COLOR);
             gc.setLineWidth(Resources.ELEMENT_SELECTION_BOX_WIDTH);
             gc.strokeRect(0, 0, view.getSize().getX(), view.getSize().getY() + 0);
@@ -32,29 +32,29 @@ public class LogicElementDrawer implements IDrawer<LogicElement> {
 
         gc.translate(xOffsets.getX(), yOffsets.getX());
 
-        gc.setLineWidth(Resources.getElementStrokeWidth(view.getState()));
-        gc.setFill(Resources.getElementBackgroundColor(view.getState()));
-        gc.setStroke(Resources.getElementStrokeColor(view.getState()));
+        gc.setLineWidth(Resources.getElementStrokeWidth(view));
+        gc.setFill(Resources.getElementBackgroundColor(view));
+        gc.setStroke(Resources.getElementStrokeColor(view));
 
         // When I write this, only me and god know what the fuck is that
         // Now, only god do.
         // Good luck
         Vector boxSize = Vector.minus(Vector.minus(view.getSize(),
                 new Vector(xOffsets.xySum(), yOffsets.xySum())),
-                new Vector(Resources.getElementStrokeWidth(view.getState()) * 2,
-                        Resources.getElementStrokeWidth(view.getState()) * 2));
+                new Vector(Resources.getElementStrokeWidth(view) * 2,
+                        Resources.getElementStrokeWidth(view) * 2));
 
-        gc.fillRect(Resources.getElementStrokeWidth(view.getState()),
-                Resources.getElementStrokeWidth(view.getState()) ,
+        gc.fillRect(Resources.getElementStrokeWidth(view),
+                Resources.getElementStrokeWidth(view) ,
                 boxSize.getX(),
                 boxSize.getY()) ;
 
         gc.setLineJoin(StrokeLineJoin.BEVEL);
         gc.setLineCap(StrokeLineCap.ROUND);
-        gc.strokeRect(Resources.getElementStrokeWidth(view.getState()) / 2,
-               Resources.getElementStrokeWidth(view.getState()) / 2,
-               boxSize.getX() + Resources.getElementStrokeWidth(view.getState()),
-                boxSize.getY() + Resources.getElementStrokeWidth(view.getState()));
+        gc.strokeRect(Resources.getElementStrokeWidth(view) / 2,
+               Resources.getElementStrokeWidth(view) / 2,
+               boxSize.getX() + Resources.getElementStrokeWidth(view),
+                boxSize.getY() + Resources.getElementStrokeWidth(view));
 
         gc.restore();
         gc.save(); // Coo-rds on circuit

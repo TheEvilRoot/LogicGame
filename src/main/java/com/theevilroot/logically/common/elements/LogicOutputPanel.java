@@ -1,7 +1,5 @@
 package com.theevilroot.logically.common.elements;
 
-import com.theevilroot.logically.common.mouse.states.State;
-
 public class LogicOutputPanel extends LogicElement {
 
     public LogicOutputPanel(int inputCount) {
@@ -21,8 +19,4 @@ public class LogicOutputPanel extends LogicElement {
         return false;
     }
 
-    @Override
-    public boolean canHaveState(State state) {
-        return true;
-    }
 }

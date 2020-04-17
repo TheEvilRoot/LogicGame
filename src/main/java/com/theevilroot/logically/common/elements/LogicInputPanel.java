@@ -1,6 +1,5 @@
 package com.theevilroot.logically.common.elements;
 
-import com.theevilroot.logically.common.mouse.states.State;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 
 public class LogicInputPanel extends LogicElement {
@@ -13,16 +12,14 @@ public class LogicInputPanel extends LogicElement {
         super(ports, ports);
     }
 
-    public LogicInputPanel triggerPort(int portIndex) {
+    public void triggerPort(int portIndex) {
         portIndex %= getOutputCount();
         outputPorts.get(portIndex).triggerValue();
-        return this;
     }
 
-    public LogicInputPanel setValues(boolean ...values) {
+    public void setValues(boolean ...values) {
         for (int i = 0; i < this.getOutputCount() && i < values.length; i++)
             outputPorts.get(i).setValue(values[i]);
-        return this;
     }
 
     @Override
@@ -35,8 +32,4 @@ public class LogicInputPanel extends LogicElement {
         return false;
     }
 
-    @Override
-    public boolean canHaveState(State state) {
-        return !(state == State.HOVER);
-    }
 }

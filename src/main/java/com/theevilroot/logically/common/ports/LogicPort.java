@@ -16,8 +16,8 @@ public class LogicPort extends BaseView implements MouseHandler {
 
     private LogicOutputPort connection;
 
-    private MutableObservable<Boolean> value = new ObservableValue<>(false);
-    private LogicElement parent;
+    private final MutableObservable<Boolean> value = new ObservableValue<>(false);
+    private final LogicElement parent;
 
     public LogicPort(LogicElement parent, double x, double y) {
         super(x, y);
@@ -34,31 +34,27 @@ public class LogicPort extends BaseView implements MouseHandler {
         return value.getValue();
     }
 
-    public LogicPort setValue(boolean value) {
+    public void setValue(boolean value) {
         this.value.setValue(value);
-        return this;
     }
 
     public boolean hasConnection() {
         return connection != null;
     }
 
-    public LogicPort haveConnected(LogicOutputPort outputPort) {
+    public void haveConnected(LogicOutputPort outputPort) {
         connection = outputPort;
-        return this;
     }
 
-    public LogicPort haveDisconnected() {
+    public void haveDisconnected() {
         connection = null;
         setValue(false);
-        return this;
     }
 
-    public LogicPort disconnectIfPresent() {
+    public void disconnectIfPresent() {
         if (connection != null) {
             connection.disconnect(this);
         }
-        return this;
     }
 
     public LogicElement getParent() {
@@ -69,8 +65,8 @@ public class LogicPort extends BaseView implements MouseHandler {
         return value;
     }
 
-    public LogicPort triggerValue() {
-        return setValue(!getValue());
+    public void triggerValue() {
+        setValue(!getValue());
     }
 
     @Override

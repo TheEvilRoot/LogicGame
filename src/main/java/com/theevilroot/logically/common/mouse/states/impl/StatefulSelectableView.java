@@ -2,12 +2,12 @@ package com.theevilroot.logically.common.mouse.states.impl;
 
 import com.theevilroot.logically.common.math.Vector;
 import com.theevilroot.logically.common.mouse.states.IStateful;
-import com.theevilroot.logically.common.mouse.states.State;
 
 public class StatefulSelectableView implements IStateful {
 
+    private int stateMask = 0xFFFFFFFF;
     private int state = 0;
-    private Vector selectOffset = new Vector(Vector.UNIT);
+    private final Vector selectOffset = new Vector(Vector.UNIT);
 
     @Override
     public boolean is(int mask) {
@@ -16,8 +16,7 @@ public class StatefulSelectableView implements IStateful {
 
     @Override
     public void set(int mask) {
-        if (canHaveState(State.fromState(state)))
-            state |= mask;
+        state |= (mask & stateMask);
     }
 
     @Override
@@ -26,8 +25,18 @@ public class StatefulSelectableView implements IStateful {
     }
 
     @Override
-    public State getState() {
-        return State.fromSelectable(this);
+    public boolean can(int mm) {
+        return (mm & stateMask) > 0;
+    }
+
+    @Override
+    public void allow(int mm) {
+        stateMask |= mm;
+    }
+
+    @Override
+    public void deny(int mm) {
+        stateMask &= ~mm;
     }
 
     public void setSelectOffset(double x, double y) {
@@ -40,10 +49,5 @@ public class StatefulSelectableView implements IStateful {
 
     public Vector getSelectOffset() {
         return selectOffset;
-    }
-
-    @Override
-    public boolean canHaveState(State state) {
-        return true;
     }
 }
