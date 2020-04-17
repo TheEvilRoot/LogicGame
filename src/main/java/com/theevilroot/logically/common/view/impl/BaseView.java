@@ -8,7 +8,6 @@ public class BaseView extends StatefulSelectableView implements IView {
 
     private final Vector position = new Vector(Vector.UNIT);
     private final Vector size = new Vector(Vector.UNIT);
-
     public BaseView(double x, double y) {
         setPosition(x, y);
     }

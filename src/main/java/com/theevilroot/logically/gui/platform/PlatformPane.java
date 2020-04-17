@@ -1,6 +1,10 @@
 package com.theevilroot.logically.gui.platform;
 
 import com.theevilroot.logically.common.elements.LogicElement;
+import com.theevilroot.logically.common.elements.LogicInputPanel;
+import com.theevilroot.logically.core.functions.base.And;
+import com.theevilroot.logically.core.functions.base.Not;
+import com.theevilroot.logically.core.functions.base.Or;
 import com.theevilroot.logically.core.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseTrace;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
@@ -32,6 +36,11 @@ public class PlatformPane extends SimpleDrawablePane implements EventHandler<Mou
         this.canvas = new Canvas();
 
         initCanvas();
+
+        addElement(new LogicInputPanel(-50f, 0f, 4));
+        addElement(new LogicElement(-50f, 0f, new And(2)));
+        addElement(new LogicElement(-50f, 0f, new Not(1)));
+        addElement(new LogicElement(-50f, 0f, new Or(2)));
     }
 
     private void initCanvas() {

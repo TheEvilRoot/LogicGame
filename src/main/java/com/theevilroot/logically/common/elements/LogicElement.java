@@ -14,7 +14,7 @@ import javafx.scene.input.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class LogicElement extends BaseView implements Observer<Boolean>, MouseHandler {
+public class LogicElement extends BaseView implements Observer<Boolean>, MouseHandler {
 
     private final LogicFunction function;
 
@@ -22,7 +22,6 @@ public abstract class LogicElement extends BaseView implements Observer<Boolean>
     protected ArrayList<LogicOutputPort> outputPorts;
 
     public LogicElement(double x, double y, LogicFunction function) {
-        super(x, y);
         this.function = function;
         recalculateSize();
         initPorts();
@@ -48,15 +47,17 @@ public abstract class LogicElement extends BaseView implements Observer<Boolean>
     }
 
     private void updatePortPositions() {
-        double inDelta = getSize().getY() / (getInputCount() + 1);
-        double outDelta = getSize().getY() / (getOutputCount() + 1);
+        if (function != null) {
+            double inDelta = getSize().getY() / (getInputCount() + 1);
+            double outDelta = getSize().getY() / (getOutputCount() + 1);
 
-        for (int i = 0; i < getInputCount(); i++) {
-            inputPorts.get(i).setPosition(getPosition().getX(), getPosition().getY() + (i + 1) * inDelta);
-        }
-        for(int i = 0; i < getOutputCount(); i++) {
-            outputPorts.get(i).setPosition(getPosition().getX() + getSize().getX() - Resources.ELEMENT_PORT_RADIUS * 2,
-                    getPosition().getY() + outDelta * (i + 1));
+            for (int i = 0; i < getInputCount(); i++) {
+                inputPorts.get(i).setPosition(getPosition().getX(), getPosition().getY() + (i + 1) * inDelta);
+            }
+            for (int i = 0; i < getOutputCount(); i++) {
+                outputPorts.get(i).setPosition(getPosition().getX() + getSize().getX() - Resources.ELEMENT_PORT_RADIUS * 2,
+                        getPosition().getY() + outDelta * (i + 1));
+            }
         }
     }
 

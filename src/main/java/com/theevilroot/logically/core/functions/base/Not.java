@@ -5,8 +5,8 @@ import com.theevilroot.logically.core.functions.BaseLogicFunction;
 
 public class Not extends BaseLogicFunction {
 
-    public Not(int inputCount, int outputCount) {
-        super(inputCount, outputCount);
+    public Not(int inputCount) {
+        super(inputCount, inputCount);
     }
 
     @Override
