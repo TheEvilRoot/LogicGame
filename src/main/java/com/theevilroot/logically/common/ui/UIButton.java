@@ -1,8 +1,8 @@
-package com.theevilroot.logically.common.view.ui;
+package com.theevilroot.logically.common.ui;
 
 import com.theevilroot.logically.core.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseTrace;
-import com.theevilroot.logically.common.view.ui.listeners.UIClickListener;
+import com.theevilroot.logically.common.ui.listeners.UIClickListener;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 

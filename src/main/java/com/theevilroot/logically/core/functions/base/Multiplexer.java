@@ -1,21 +1,16 @@
-package com.theevilroot.logically.common.elements.base;
+package com.theevilroot.logically.core.functions.base;
 
-import com.theevilroot.logically.common.elements.LogicElement;
-import com.theevilroot.logically.common.ports.LogicPort;
+import com.theevilroot.logically.core.functions.BaseLogicFunction;
 
-public class LogicMultiplexer extends LogicElement {
+public class Multiplexer extends BaseLogicFunction {
 
     private final int valuePortCount;
     private final int controlPortCount;
 
-    public LogicMultiplexer(double x, double y, int valueInputCount) {
-        super(x, y, valueInputCount + (int) (Math.log(valueInputCount) / Math.log(2)), 1);
+    public Multiplexer(int valueInputCount) {
+        super(valueInputCount + (int) (Math.log(valueInputCount) / Math.log(2)), 1);
         this.valuePortCount = valueInputCount;
         this.controlPortCount = (int) (Math.log(valueInputCount) / Math.log(2));
-    }
-
-    public LogicMultiplexer(int valueInputCount) {
-        this(0, 0, valueInputCount);
     }
 
     public int getValuePortCount() {
@@ -26,16 +21,16 @@ public class LogicMultiplexer extends LogicElement {
         return controlPortCount;
     }
 
-    protected int mapValuePort(int index) {
+    private int mapValuePort(int index) {
         return index;
     }
 
-    protected int mapControlPortIndex(int index) {
+    private int mapControlPortIndex(int index) {
         return index + valuePortCount;
     }
 
     @Override
-    protected boolean f(int outputIndex, Boolean[] inputValues) {
+    public boolean f(int outputIndex, Boolean[] inputValues) {
         int valuePortIndex = 0;
         for (int i = 0; i < getControlPortCount(); i++) {
             valuePortIndex <<= 1;

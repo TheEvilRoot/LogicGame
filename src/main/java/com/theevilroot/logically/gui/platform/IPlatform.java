@@ -3,7 +3,7 @@ package com.theevilroot.logically.gui.platform;
 import com.theevilroot.logically.common.elements.LogicElement;
 import com.theevilroot.logically.core.math.Vector;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
-import com.theevilroot.logically.common.view.ui.UIView;
+import com.theevilroot.logically.common.ui.UIView;
 import javafx.scene.canvas.Canvas;
 
 public interface IPlatform {

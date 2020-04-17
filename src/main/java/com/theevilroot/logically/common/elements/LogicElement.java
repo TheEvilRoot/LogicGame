@@ -1,5 +1,6 @@
 package com.theevilroot.logically.common.elements;
 
+import com.theevilroot.logically.core.functions.LogicFunction;
 import com.theevilroot.logically.core.Resources;
 import com.theevilroot.logically.core.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseHandler;
@@ -15,21 +16,14 @@ import java.util.List;
 
 public abstract class LogicElement extends BaseView implements Observer<Boolean>, MouseHandler {
 
-    private final int inputCount;
-    private final int outputCount;
+    private final LogicFunction function;
 
     protected ArrayList<LogicPort> inputPorts;
     protected ArrayList<LogicOutputPort> outputPorts;
 
-    public LogicElement(int inputCount, int outputCount) {
-        this(0, 0, inputCount, outputCount);
-    }
-
-    public LogicElement(double x, double y, int inputCount, int outputCount) {
+    public LogicElement(double x, double y, LogicFunction function) {
         super(x, y);
-        this.inputCount = inputCount;
-        this.outputCount = outputCount;
-
+        this.function = function;
         recalculateSize();
         initPorts();
     }
@@ -38,14 +32,11 @@ public abstract class LogicElement extends BaseView implements Observer<Boolean>
         this.inputPorts = new ArrayList<>();
         this.outputPorts = new ArrayList<>();
 
-        double inDelta = getSize().getY() / (inputCount + 1);
-        double outDelta = getSize().getY() / (outputCount + 1);
-
-        for (int i = 0; i < inputCount; i++) {
+        for (int i = 0; i < getInputCount(); i++) {
             LogicPort port = new LogicPort(this);
             inputPorts.add(port);
         }
-        for(int i = 0; i < outputCount; i++) {
+        for(int i = 0; i < getOutputCount(); i++) {
             outputPorts.add(new LogicOutputPort(this));
         }
 
@@ -57,24 +48,24 @@ public abstract class LogicElement extends BaseView implements Observer<Boolean>
     }
 
     private void updatePortPositions() {
-        double inDelta = getSize().getY() / (inputCount + 1);
-        double outDelta = getSize().getY() / (outputCount + 1);
+        double inDelta = getSize().getY() / (getInputCount() + 1);
+        double outDelta = getSize().getY() / (getOutputCount() + 1);
 
-        for (int i = 0; i < inputCount; i++) {
+        for (int i = 0; i < getInputCount(); i++) {
             inputPorts.get(i).setPosition(getPosition().getX(), getPosition().getY() + (i + 1) * inDelta);
         }
-        for(int i = 0; i < outputCount; i++) {
+        for(int i = 0; i < getOutputCount(); i++) {
             outputPorts.get(i).setPosition(getPosition().getX() + getSize().getX() - Resources.ELEMENT_PORT_RADIUS * 2,
                     getPosition().getY() + outDelta * (i + 1));
         }
     }
 
     public int getOutputCount() {
-        return outputCount;
+        return function.getOutputCount();
     }
 
     public int getInputCount() {
-        return inputCount;
+        return function.getInputCount();
     }
 
     public List<LogicPort> getInputPorts() {
@@ -85,6 +76,10 @@ public abstract class LogicElement extends BaseView implements Observer<Boolean>
         return outputPorts;
     }
 
+    public LogicFunction getFunction() {
+        return function;
+    }
+
     public void connectPort(int outputIndex, LogicElement element, int inputIndex) {
         this.outputPorts.get(outputIndex).connect(element.inputPorts.get(inputIndex));
         update();
@@ -92,7 +87,7 @@ public abstract class LogicElement extends BaseView implements Observer<Boolean>
 
     public void update() {
         for (int i = 0; i < getOutputCount(); i++) {
-            outputPorts.get(i).setValue(f(i, inputPorts.stream().map(LogicPort::getValue).toArray(Boolean[]::new)));
+            outputPorts.get(i).setValue(function.f(i, inputPorts.stream().map(LogicPort::getValue).toArray(Boolean[]::new)));
         }
     }
 
@@ -144,7 +139,5 @@ public abstract class LogicElement extends BaseView implements Observer<Boolean>
         super.setPosition(x, y);
         updatePortPositions();
     }
-
-    protected abstract boolean f(int outputIndex, Boolean[] inputValues);
 
 }

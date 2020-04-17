@@ -1,4 +1,4 @@
-package com.theevilroot.logically.common.view.ui.listeners;
+package com.theevilroot.logically.common.ui.listeners;
 
 import com.theevilroot.logically.common.view.impl.BaseView;
 import javafx.scene.input.MouseEvent;

@@ -4,7 +4,7 @@ import com.theevilroot.logically.core.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseTrace;
 import com.theevilroot.logically.common.view.IView;
 import com.theevilroot.logically.common.view.drawers.IDrawer;
-import com.theevilroot.logically.common.view.ui.UIView;
+import com.theevilroot.logically.common.ui.UIView;
 import com.theevilroot.logically.gui.platform.IPlatform;
 import javafx.scene.input.MouseEvent;
 

@@ -1,15 +1,12 @@
 package com.theevilroot.logically.common.elements;
 
+import com.theevilroot.logically.core.functions.base.constant.ConstFalse;
 import com.theevilroot.logically.common.ports.LogicOutputPort;
 
 public class LogicInputPanel extends LogicElement {
 
     public LogicInputPanel(double x, double y, int ports) {
-        super(x, y, 0, ports);
-    }
-
-    public LogicInputPanel(int ports) {
-        super(ports, ports);
+        super(x, y, new ConstFalse(0, ports));
     }
 
     public void triggerPort(int portIndex) {
@@ -25,11 +22,6 @@ public class LogicInputPanel extends LogicElement {
     @Override
     public void update() {
         outputPorts.forEach(LogicOutputPort::updateConnections);
-    }
-
-    @Override
-    protected boolean f(int outputIndex, Boolean[] inputValues) {
-        return false;
     }
 
 }

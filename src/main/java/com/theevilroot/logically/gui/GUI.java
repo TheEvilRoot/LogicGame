@@ -8,7 +8,7 @@ import com.theevilroot.logically.common.view.drawers.impl.LogicElementDrawer;
 import com.theevilroot.logically.common.view.drawers.impl.LogicPortDrawer;
 import com.theevilroot.logically.common.ports.LogicPort;
 import com.theevilroot.logically.common.view.drawers.impl.UITextViewDrawer;
-import com.theevilroot.logically.common.view.ui.UITextView;
+import com.theevilroot.logically.common.ui.UITextView;
 import com.theevilroot.logically.gui.platform.PlatformPane;
 import javafx.application.Application;
 import javafx.scene.Scene;

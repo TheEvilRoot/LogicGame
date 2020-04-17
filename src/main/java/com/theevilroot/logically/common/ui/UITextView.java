@@ -1,4 +1,4 @@
-package com.theevilroot.logically.common.view.ui;
+package com.theevilroot.logically.common.ui;
 
 import com.theevilroot.logically.core.Resources;
 import javafx.scene.paint.Paint;

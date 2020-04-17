@@ -4,7 +4,7 @@ import com.theevilroot.logically.common.elements.LogicElement;
 import com.theevilroot.logically.core.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseTrace;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
-import com.theevilroot.logically.common.view.ui.UIView;
+import com.theevilroot.logically.common.ui.UIView;
 import com.theevilroot.logically.gui.platform.handlers.PlatformCircuitHandler;
 import com.theevilroot.logically.gui.platform.handlers.PlatformUIHandler;
 import com.theevilroot.logically.gui.drawable.impl.SimpleDrawablePane;

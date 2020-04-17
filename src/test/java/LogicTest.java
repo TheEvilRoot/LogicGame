@@ -1,9 +1,5 @@
 import com.theevilroot.logically.common.elements.LogicInputPanel;
 import com.theevilroot.logically.common.elements.LogicOutputPanel;
-import com.theevilroot.logically.common.elements.base.LogicAndGate;
-import com.theevilroot.logically.common.elements.base.LogicNotGate;
-import com.theevilroot.logically.common.elements.base.LogicOrGate;
-import com.theevilroot.logically.common.elements.base.LogicXorGate;
 import org.junit.Assert;
 import org.junit.Test;
 

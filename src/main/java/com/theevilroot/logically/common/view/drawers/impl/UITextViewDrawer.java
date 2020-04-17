@@ -2,7 +2,7 @@ package com.theevilroot.logically.common.view.drawers.impl;
 
 import com.theevilroot.logically.common.view.drawers.IDrawer;
 import com.theevilroot.logically.common.view.drawers.factory.IDrawerFactory;
-import com.theevilroot.logically.common.view.ui.UITextView;
+import com.theevilroot.logically.common.ui.UITextView;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;

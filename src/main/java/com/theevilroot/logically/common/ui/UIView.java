@@ -1,4 +1,4 @@
-package com.theevilroot.logically.common.view.ui;
+package com.theevilroot.logically.common.ui;
 
 import com.theevilroot.logically.core.math.Vector;
 import com.theevilroot.logically.common.mouse.MouseHandler;
